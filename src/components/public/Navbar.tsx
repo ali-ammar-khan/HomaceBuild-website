@@ -75,7 +75,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-7 text-sm font-semibold text-brand-slate-700">
+          <nav className="hidden lg:flex items-center gap-6 text-sm font-semibold text-brand-slate-700">
             <Link
               href="/"
               prefetch={true}
@@ -98,25 +98,25 @@ export default function Navbar() {
               For Rent
             </Link>
             <Link
-              href="/properties?category=residential_plot"
+              href="/services"
               prefetch={true}
               className="hover:text-brand-azure py-1 transition-colors active:scale-95"
             >
-              Plots
+              Services
             </Link>
             <Link
-              href="/locations/bahria-town"
+              href="/locations"
               prefetch={true}
               className="hover:text-brand-azure py-1 transition-colors active:scale-95"
             >
-              Bahria Town
+              Areas Served
             </Link>
             <Link
-              href="/locations/dha-islamabad"
+              href="/about"
               prefetch={true}
               className="hover:text-brand-azure py-1 transition-colors active:scale-95"
             >
-              DHA
+              About
             </Link>
             <Link
               href="/contact"
@@ -193,28 +193,36 @@ export default function Navbar() {
               For Rent
             </Link>
             <Link
-              href="/properties?category=residential_plot"
+              href="/services"
               prefetch={true}
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-md hover:bg-brand-slate-50 active:scale-95"
             >
-              Plots & Files
+              Our Services
             </Link>
             <Link
-              href="/locations/bahria-town"
+              href="/locations"
               prefetch={true}
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-md hover:bg-brand-slate-50 active:scale-95"
             >
-              Bahria Town Properties
+              Areas Served
             </Link>
             <Link
-              href="/locations/dha-islamabad"
+              href="/about"
               prefetch={true}
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-md hover:bg-brand-slate-50 active:scale-95"
             >
-              DHA Properties
+              About HomaceBuild
+            </Link>
+            <Link
+              href="/tools/area-calculator"
+              prefetch={true}
+              onClick={() => setMobileMenuOpen(false)}
+              className="px-3 py-2 rounded-md hover:bg-brand-slate-50 active:scale-95"
+            >
+              Marla & Area Calculator
             </Link>
             <Link
               href="/contact"

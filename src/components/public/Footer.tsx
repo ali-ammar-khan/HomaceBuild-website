@@ -51,15 +51,15 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/properties?category=residential_plot" prefetch={true} className="hover:text-brand-copper transition-colors flex items-center gap-1.5 active:scale-95">
+                <Link href="/locations" prefetch={true} className="hover:text-brand-copper transition-colors flex items-center gap-1.5 active:scale-95">
                   <ArrowRight className="w-3 h-3 text-brand-copper" />
-                  Residential Plots (5, 10 Marla, 1, 2 Kanal)
+                  All Areas Served
                 </Link>
               </li>
               <li>
-                <Link href="/properties?category=commercial_plot" prefetch={true} className="hover:text-brand-copper transition-colors flex items-center gap-1.5 active:scale-95">
+                <Link href="/tools/area-calculator" prefetch={true} className="hover:text-brand-copper transition-colors flex items-center gap-1.5 active:scale-95">
                   <ArrowRight className="w-3 h-3 text-brand-copper" />
-                  Commercial Plots & Commercial Plazas
+                  Marla & Area Calculator (225 sq ft)
                 </Link>
               </li>
               <li>
@@ -71,35 +71,35 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 3: Property Types */}
+          {/* Column 3: Advisory Services */}
           <div>
             <h4 className="text-white font-semibold text-sm uppercase tracking-wider mb-4 border-l-2 border-brand-azure pl-2">
-              Property Categories
+              Advisory Services
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/properties?category=house" prefetch={true} className="hover:text-brand-azure-light transition-colors active:scale-95">
-                  Houses & Luxury Villas
+                <Link href="/services/buying-and-selling" prefetch={true} className="hover:text-brand-azure-light transition-colors active:scale-95">
+                  Property Buying & Selling
                 </Link>
               </li>
               <li>
-                <Link href="/properties?category=apartment" prefetch={true} className="hover:text-brand-azure-light transition-colors active:scale-95">
-                  Modern Apartments & Flats
+                <Link href="/services/rentals" prefetch={true} className="hover:text-brand-azure-light transition-colors active:scale-95">
+                  Rental & Tenancy Services
                 </Link>
               </li>
               <li>
-                <Link href="/properties?category=shop" prefetch={true} className="hover:text-brand-azure-light transition-colors active:scale-95">
-                  Commercial Shops & Retail Outlets
+                <Link href="/services/residential" prefetch={true} className="hover:text-brand-azure-light transition-colors active:scale-95">
+                  Residential Plots & Homes
                 </Link>
               </li>
               <li>
-                <Link href="/properties?category=office" prefetch={true} className="hover:text-brand-azure-light transition-colors active:scale-95">
-                  Corporate Offices
+                <Link href="/services/commercial" prefetch={true} className="hover:text-brand-azure-light transition-colors active:scale-95">
+                  Commercial Plots & Plazas
                 </Link>
               </li>
               <li>
-                <Link href="/properties?plot_status=file" prefetch={true} className="hover:text-brand-azure-light transition-colors active:scale-95">
-                  Balloted Plots & Verified Files
+                <Link href="/services" prefetch={true} className="hover:text-brand-azure-light transition-colors active:scale-95">
+                  All Advisory Services
                 </Link>
               </li>
             </ul>
@@ -137,7 +137,7 @@ export default function Footer() {
                   prefetch={true}
                   className="inline-block bg-brand-slate-800 hover:bg-brand-slate-700 text-white text-xs px-3.5 py-2 rounded border border-brand-slate-700 transition-colors active:scale-95"
                 >
-                  Send On-Site Inquiry
+                  Schedule Consultation
                 </Link>
               </div>
             </div>
@@ -149,12 +149,21 @@ export default function Footer() {
           <p>
             © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
-          <div className="flex items-center gap-6">
-            <Link href="/properties" prefetch={true} className="hover:text-brand-slate-400 transition-colors">
-              Listings Directory
+          <div className="flex flex-wrap items-center gap-5 sm:gap-6">
+            <Link href="/about" prefetch={true} className="hover:text-brand-slate-400 transition-colors">
+              About
             </Link>
-            <Link href="/contact" prefetch={true} className="hover:text-brand-slate-400 transition-colors">
-              Contact
+            <Link href="/services" prefetch={true} className="hover:text-brand-slate-400 transition-colors">
+              Services
+            </Link>
+            <Link href="/locations" prefetch={true} className="hover:text-brand-slate-400 transition-colors">
+              Areas Served
+            </Link>
+            <Link href="/privacy-policy" prefetch={true} className="hover:text-brand-slate-400 transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-of-use" prefetch={true} className="hover:text-brand-slate-400 transition-colors">
+              Terms of Use
             </Link>
             <Link href="/login" prefetch={true} className="hover:text-brand-slate-400 transition-colors">
               Staff Portal
