@@ -16,17 +16,19 @@ export default function Navbar() {
     : null;
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-brand-slate-200 shadow-sm">
       {/* Top Advisory Bar */}
-      <div className="bg-brand-navy text-slate-300 text-xs py-2 px-4 border-b border-brand-navyLight">
+      <div className="bg-brand-navy-dark text-brand-slate-300 text-xs py-2 px-4 border-b border-brand-navy">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1.5 text-brand-gold font-medium">
-              <ShieldCheck className="w-3.5 h-3.5" />
+            <span className="inline-flex items-center gap-1.5 text-brand-copper font-medium tracking-wide">
+              <ShieldCheck className="w-3.5 h-3.5 text-brand-cyan" />
               Verified Real Estate Advisory
             </span>
-            <span className="hidden md:inline text-slate-500">•</span>
-            <span className="hidden md:inline">Specialists in Bahria Town & DHA (Islamabad / Rawalpindi)</span>
+            <span className="hidden md:inline text-brand-slate-600">•</span>
+            <span className="hidden md:inline text-[11px] uppercase tracking-wider text-brand-slate-400">
+              Bahria Town & DHA (Islamabad / Rawalpindi)
+            </span>
           </div>
 
           <div className="flex items-center gap-4 text-xs">
@@ -35,13 +37,13 @@ export default function Navbar() {
                 href={`tel:${siteConfig.contact.phone}`}
                 className="hover:text-white transition-colors flex items-center gap-1"
               >
-                <Phone className="w-3 h-3 text-brand-gold" />
+                <Phone className="w-3 h-3 text-brand-copper" />
                 {siteConfig.contact.phone}
               </a>
             )}
             <Link
               href="/login"
-              className="text-slate-400 hover:text-white transition-colors border-l border-slate-700 pl-3"
+              className="text-brand-slate-400 hover:text-white transition-colors border-l border-brand-slate-800 pl-3"
             >
               Staff Portal
             </Link>
@@ -52,60 +54,60 @@ export default function Navbar() {
       {/* Main Navigation */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Company Brand & Logo */}
+          {/* Company Brand Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative h-14 w-40 flex items-center">
+            <div className="relative h-14 w-44 flex items-center">
               <Image
                 src="/HomaceLogo.png"
                 alt="HomaceBuild and Realators Logo"
                 fill
                 priority
-                className="object-contain object-left transition-transform duration-200 group-hover:scale-102"
+                className="object-contain object-left"
               />
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-700">
+          <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-brand-slate-700">
             <Link
               href="/"
-              className="hover:text-brand-gold transition-colors py-1"
+              className="hover:text-brand-azure transition-colors py-1"
             >
               Home
             </Link>
             <Link
               href="/properties?purpose=sale"
-              className="hover:text-brand-gold transition-colors py-1"
+              className="hover:text-brand-azure transition-colors py-1"
             >
               For Sale
             </Link>
             <Link
               href="/properties?purpose=rent"
-              className="hover:text-brand-gold transition-colors py-1"
+              className="hover:text-brand-azure transition-colors py-1"
             >
               For Rent
             </Link>
             <Link
               href="/properties?category=residential_plot"
-              className="hover:text-brand-gold transition-colors py-1"
+              className="hover:text-brand-azure transition-colors py-1"
             >
               Plots
             </Link>
             <Link
               href="/properties?location=Bahria+Town"
-              className="hover:text-brand-gold transition-colors py-1"
+              className="hover:text-brand-azure transition-colors py-1"
             >
               Bahria Town
             </Link>
             <Link
               href="/properties?location=DHA"
-              className="hover:text-brand-gold transition-colors py-1"
+              className="hover:text-brand-azure transition-colors py-1"
             >
               DHA
             </Link>
             <Link
               href="/contact"
-              className="hover:text-brand-gold transition-colors py-1"
+              className="hover:text-brand-azure transition-colors py-1"
             >
               Contact
             </Link>
@@ -127,7 +129,7 @@ export default function Navbar() {
 
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 bg-brand-navy hover:bg-brand-navyLight text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-all border border-brand-navyLight shadow-sm"
+              className="inline-flex items-center gap-2 bg-brand-copper hover:bg-brand-copper-hover text-white px-4 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-sm"
             >
               Schedule Consultation
             </Link>
@@ -138,7 +140,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+              className="p-2 rounded-lg text-brand-slate-600 hover:text-brand-slate-900 hover:bg-brand-slate-100"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -149,67 +151,67 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-3">
-          <div className="flex flex-col space-y-2 text-base font-medium text-slate-800">
+        <div className="lg:hidden border-t border-brand-slate-200 bg-white px-4 pt-3 pb-6 space-y-3">
+          <div className="flex flex-col space-y-2 text-base font-medium text-brand-slate-800">
             <Link
               href="/"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md hover:bg-slate-50"
+              className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
             >
               Home
             </Link>
             <Link
               href="/properties?purpose=sale"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md hover:bg-slate-50"
+              className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
             >
               For Sale
             </Link>
             <Link
               href="/properties?purpose=rent"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md hover:bg-slate-50"
+              className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
             >
               For Rent
             </Link>
             <Link
               href="/properties?category=residential_plot"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md hover:bg-slate-50"
+              className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
             >
               Plots & Files
             </Link>
             <Link
               href="/properties?location=Bahria+Town"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md hover:bg-slate-50"
+              className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
             >
               Bahria Town Properties
             </Link>
             <Link
               href="/properties?location=DHA"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md hover:bg-slate-50"
+              className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
             >
               DHA Properties
             </Link>
             <Link
               href="/contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md hover:bg-slate-50"
+              className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
             >
               Contact Us
             </Link>
             <Link
               href="/login"
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md text-brand-gold font-semibold hover:bg-slate-50"
+              className="px-3 py-2 rounded-md text-brand-azure font-semibold hover:bg-brand-slate-50"
             >
               Staff Dashboard Sign In
             </Link>
           </div>
 
-          <div className="pt-4 border-t border-slate-100 flex flex-col gap-2">
+          <div className="pt-4 border-t border-brand-slate-100 flex flex-col gap-2">
             {whatsappUrl && (
               <a
                 href={whatsappUrl}
@@ -224,7 +226,7 @@ export default function Navbar() {
             <Link
               href="/contact"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center py-3 bg-brand-navy hover:bg-brand-navyLight text-white rounded-lg font-medium"
+              className="w-full text-center py-3 bg-brand-copper hover:bg-brand-copper-hover text-white rounded-lg font-semibold"
             >
               Submit Property Inquiry
             </Link>

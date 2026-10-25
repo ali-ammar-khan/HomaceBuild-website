@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "HomaceBuild and Realators",
-  tagline: "Premier Real Estate & Architectural Advisory",
+  tagline: "WE ENGINEER YOUR DREAMS",
   description: "Specialized residential and commercial real estate solutions across Bahria Town, DHA, and the Islamabad/Rawalpindi region.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   

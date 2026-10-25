@@ -103,21 +103,22 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
       />
 
       {/* Header Info */}
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-slate-200">
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-brand-slate-200">
         <div className="space-y-2">
           <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="bg-brand-navy text-brand-gold font-bold px-2.5 py-1 rounded uppercase tracking-wider">
+            <span className="bg-brand-navy text-white font-bold px-2.5 py-1 rounded uppercase tracking-wider">
               For {typedProperty.purpose}
             </span>
-            <span className="bg-slate-100 text-slate-700 font-medium px-2.5 py-1 rounded uppercase">
+            <span className="bg-brand-slate-100 text-brand-slate-700 font-semibold px-2.5 py-1 rounded uppercase">
               {typedProperty.category.replace('_', ' ')}
             </span>
             {typedProperty.plot_file_status !== 'not_applicable' && (
-              <span className="bg-emerald-600 text-white font-semibold px-2.5 py-1 rounded">
+              <span className="bg-emerald-600 text-white font-semibold px-2.5 py-1 rounded flex items-center gap-1">
+                <ShieldCheck className="w-3.5 h-3.5" />
                 {typedProperty.plot_file_status.replace('_', ' ').toUpperCase()}
               </span>
             )}
-            <span className="text-slate-400 font-mono">
+            <span className="text-brand-slate-400 font-mono">
               Ref: #{typedProperty.reference_code}
             </span>
           </div>
@@ -126,8 +127,8 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
             {typedProperty.title}
           </h1>
 
-          <p className="text-xs sm:text-sm text-slate-500 flex items-center gap-1.5">
-            <MapPin className="w-4 h-4 text-brand-gold shrink-0" />
+          <p className="text-xs sm:text-sm text-brand-slate-500 flex items-center gap-1.5">
+            <MapPin className="w-4 h-4 text-brand-copper shrink-0" />
             <span>
               {[typedProperty.sector_block, typedProperty.area_location, typedProperty.city].filter(Boolean).join(', ')}
             </span>
@@ -137,7 +138,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
         {/* Pricing Box & Quick Action */}
         <div className="flex flex-col sm:flex-row sm:items-center lg:flex-col lg:items-end gap-3">
           <div className="text-left lg:text-right">
-            <span className="text-xs text-slate-500 block uppercase tracking-wider font-semibold">
+            <span className="text-xs text-brand-slate-500 block uppercase tracking-wider font-semibold">
               Listing Price
             </span>
             <span className="text-2xl sm:text-3xl font-extrabold text-brand-navy">
@@ -161,7 +162,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
 
       {/* Media Gallery / Main Image */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="md:col-span-2 relative h-80 sm:h-96 md:h-[480px] rounded-2xl overflow-hidden bg-slate-900 border border-slate-200">
+        <div className="md:col-span-2 relative h-80 sm:h-96 md:h-[480px] rounded-2xl overflow-hidden bg-brand-slate-900 border border-brand-slate-200">
           <Image
             src={displayImages[0]}
             alt={typedProperty.title}
@@ -174,18 +175,18 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
         {/* Side Thumbnails or Advisory Box */}
         <div className="flex flex-col gap-4">
           {displayImages.slice(1, 3).map((img, index) => (
-            <div key={index} className="relative h-44 sm:h-56 md:h-[232px] rounded-2xl overflow-hidden bg-slate-900 border border-slate-200">
+            <div key={index} className="relative h-44 sm:h-56 md:h-[232px] rounded-2xl overflow-hidden bg-brand-slate-900 border border-brand-slate-200">
               <Image src={img} alt={`${typedProperty.title} photo ${index + 2}`} fill className="object-cover" />
             </div>
           ))}
 
           {displayImages.length <= 1 && (
-            <div className="h-full bg-slate-50 border border-slate-200 rounded-2xl p-6 flex flex-col justify-center text-center">
-              <ShieldCheck className="w-10 h-10 text-brand-gold mx-auto mb-2" />
+            <div className="h-full bg-brand-slate-50 border border-brand-slate-200 rounded-2xl p-6 flex flex-col justify-center text-center">
+              <ShieldCheck className="w-10 h-10 text-brand-copper mx-auto mb-2" />
               <h4 className="text-sm font-bold text-brand-navy">
                 Verified Listing Standards
               </h4>
-              <p className="text-xs text-slate-500 mt-1">
+              <p className="text-xs text-brand-slate-500 mt-1">
                 All property attributes are verified against official developer records (Bahria Town & DHA).
               </p>
             </div>
@@ -198,26 +199,26 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
         {/* Left Column: Specifications & Description */}
         <div className="lg:col-span-2 space-y-8">
           {/* Overview Metric Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 bg-white rounded-2xl border border-slate-200">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 bg-white rounded-2xl border border-brand-slate-200">
             <div>
-              <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+              <span className="text-[11px] font-semibold text-brand-slate-400 uppercase tracking-wider block">
                 Area Size
               </span>
-              <span className="text-base font-bold text-slate-900 mt-0.5 block">
+              <span className="text-base font-bold text-brand-navy mt-0.5 block">
                 {formatArea(typedProperty.area_value, typedProperty.area_unit)}
               </span>
-              <span className="text-[11px] text-slate-500 block">
+              <span className="text-[11px] text-brand-slate-500 block">
                 ≈ {Number(typedProperty.area_in_sqft).toLocaleString()} Sq. Ft.
               </span>
             </div>
 
             {typedProperty.bedrooms !== null && typedProperty.bedrooms !== undefined && typedProperty.bedrooms > 0 && (
               <div>
-                <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+                <span className="text-[11px] font-semibold text-brand-slate-400 uppercase tracking-wider block">
                   Bedrooms
                 </span>
-                <span className="text-base font-bold text-slate-900 mt-0.5 block flex items-center gap-1">
-                  <Bed className="w-4 h-4 text-brand-gold" />
+                <span className="text-base font-bold text-brand-navy mt-0.5 block flex items-center gap-1">
+                  <Bed className="w-4 h-4 text-brand-azure" />
                   {typedProperty.bedrooms}
                 </span>
               </div>
@@ -225,18 +226,18 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
 
             {typedProperty.bathrooms !== null && typedProperty.bathrooms !== undefined && typedProperty.bathrooms > 0 && (
               <div>
-                <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+                <span className="text-[11px] font-semibold text-brand-slate-400 uppercase tracking-wider block">
                   Bathrooms
                 </span>
-                <span className="text-base font-bold text-slate-900 mt-0.5 block flex items-center gap-1">
-                  <Bath className="w-4 h-4 text-brand-gold" />
+                <span className="text-base font-bold text-brand-navy mt-0.5 block flex items-center gap-1">
+                  <Bath className="w-4 h-4 text-brand-azure" />
                   {typedProperty.bathrooms}
                 </span>
               </div>
             )}
 
             <div>
-              <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">
+              <span className="text-[11px] font-semibold text-brand-slate-400 uppercase tracking-wider block">
                 Availability
               </span>
               <span className="text-base font-bold text-emerald-600 mt-0.5 block uppercase">
@@ -246,53 +247,53 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
           </div>
 
           {/* Description Section */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8">
+          <div className="bg-white rounded-2xl border border-brand-slate-200 p-6 sm:p-8">
             <h2 className="text-lg font-bold text-brand-navy mb-4">
               Property Description
             </h2>
-            <div className="text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+            <div className="text-sm text-brand-slate-700 leading-relaxed whitespace-pre-line">
               {typedProperty.description || 'Contact our advisory desk for comprehensive documentation, transfer procedure, and site visit scheduling.'}
             </div>
           </div>
 
           {/* Technical Specifications Table */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8">
+          <div className="bg-white rounded-2xl border border-brand-slate-200 p-6 sm:p-8">
             <h2 className="text-lg font-bold text-brand-navy mb-4">
               Listing Details & Technical Metrics
             </h2>
             <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-xs">
-              <div className="border-b border-slate-100 pb-2">
-                <dt className="text-slate-500 font-medium">Reference Code</dt>
-                <dd className="font-semibold text-slate-800 font-mono mt-0.5">#{typedProperty.reference_code}</dd>
+              <div className="border-b border-brand-slate-100 pb-2">
+                <dt className="text-brand-slate-500 font-medium">Reference Code</dt>
+                <dd className="font-semibold text-brand-slate-800 font-mono mt-0.5">#{typedProperty.reference_code}</dd>
               </div>
 
-              <div className="border-b border-slate-100 pb-2">
-                <dt className="text-slate-500 font-medium">Purpose</dt>
-                <dd className="font-semibold text-slate-800 capitalize mt-0.5">{typedProperty.purpose}</dd>
+              <div className="border-b border-brand-slate-100 pb-2">
+                <dt className="text-brand-slate-500 font-medium">Purpose</dt>
+                <dd className="font-semibold text-brand-slate-800 capitalize mt-0.5">{typedProperty.purpose}</dd>
               </div>
 
-              <div className="border-b border-slate-100 pb-2">
-                <dt className="text-slate-500 font-medium">Property Category</dt>
-                <dd className="font-semibold text-slate-800 capitalize mt-0.5">{typedProperty.category.replace('_', ' ')}</dd>
+              <div className="border-b border-brand-slate-100 pb-2">
+                <dt className="text-brand-slate-500 font-medium">Property Category</dt>
+                <dd className="font-semibold text-brand-slate-800 capitalize mt-0.5">{typedProperty.category.replace('_', ' ')}</dd>
               </div>
 
-              <div className="border-b border-slate-100 pb-2">
-                <dt className="text-slate-500 font-medium">Local Marla Standard</dt>
-                <dd className="font-semibold text-slate-800 mt-0.5">
+              <div className="border-b border-brand-slate-100 pb-2">
+                <dt className="text-brand-slate-500 font-medium">Local Marla Standard</dt>
+                <dd className="font-semibold text-brand-slate-800 mt-0.5">
                   1 Marla = {typedProperty.marla_sqft_standard} sq ft (Bahria/DHA/CDA convention)
                 </dd>
               </div>
 
-              <div className="border-b border-slate-100 pb-2">
-                <dt className="text-slate-500 font-medium">Normalized Marla Size</dt>
-                <dd className="font-semibold text-slate-800 mt-0.5">
+              <div className="border-b border-brand-slate-100 pb-2">
+                <dt className="text-brand-slate-500 font-medium">Normalized Marla Size</dt>
+                <dd className="font-semibold text-brand-slate-800 mt-0.5">
                   {Number(typedProperty.area_in_marla).toFixed(2)} Marla
                 </dd>
               </div>
 
-              <div className="border-b border-slate-100 pb-2">
-                <dt className="text-slate-500 font-medium">Development & Plot Status</dt>
-                <dd className="font-semibold text-slate-800 capitalize mt-0.5">
+              <div className="border-b border-brand-slate-100 pb-2">
+                <dt className="text-brand-slate-500 font-medium">Development & Plot Status</dt>
+                <dd className="font-semibold text-brand-slate-800 capitalize mt-0.5">
                   {typedProperty.plot_file_status.replace('_', ' ')}
                 </dd>
               </div>
