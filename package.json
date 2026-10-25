@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "node scripts/test-floating-whatsapp.mjs && node scripts/test-admin-dashboard.mjs && node scripts/test-e2e-functional.mjs && node scripts/test-database-integration.mjs && node scripts/test-inquiries.mjs && node scripts/test-seo-audit.mjs && node scripts/test-heading-hierarchy.mjs && node scripts/verify-production-readiness.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",
