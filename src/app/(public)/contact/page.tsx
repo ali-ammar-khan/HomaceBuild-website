@@ -64,9 +64,9 @@ export default function ContactPage() {
         {/* Contact Information & Channels */}
         <div className="space-y-6">
           <div className="bg-white rounded-3xl border border-brand-slate-200 p-6 sm:p-8 space-y-6 shadow-xs">
-            <h3 className="text-base font-bold text-brand-navy border-b border-brand-slate-100 pb-3">
+            <h2 className="text-base font-bold text-brand-navy border-b border-brand-slate-100 pb-3">
               Official Communication Channels
-            </h3>
+            </h2>
 
             <div className="space-y-4 text-xs">
               <div className="flex items-start gap-3">

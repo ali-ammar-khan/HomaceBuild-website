@@ -9,7 +9,6 @@ import {
   PlusCircle,
   Inbox,
   LogOut,
-  Shield,
   ExternalLink,
 } from 'lucide-react';
 
@@ -40,7 +39,7 @@ export default async function AdminLayout({
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col md:flex-row">
       {/* Sidebar Navigation */}
-      <aside className="w-full md:w-64 bg-brand-navyDark text-slate-300 flex flex-col border-r border-slate-800">
+      <aside className="w-full md:w-64 bg-brand-navy-dark text-slate-300 flex flex-col border-r border-slate-800">
         {/* Brand Header with Clean Logo Display */}
         <div className="p-5 border-b border-slate-800 flex items-center justify-between">
           <Link href="/admin" className="relative h-14 w-44 block bg-white p-2 rounded-xl shadow-sm">
@@ -51,14 +50,14 @@ export default async function AdminLayout({
               className="object-contain object-center"
             />
           </Link>
-          <span className="text-[10px] font-mono bg-brand-gold/20 text-brand-gold px-2 py-0.5 rounded uppercase">
+          <span className="text-[10px] font-mono bg-brand-copper/20 text-brand-copper px-2 py-0.5 rounded uppercase">
             {role}
           </span>
         </div>
 
         {/* User Badge */}
         <div className="p-4 bg-slate-900/60 border-b border-slate-800/80 flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-brand-gold/20 text-brand-gold flex items-center justify-center font-bold text-xs uppercase">
+          <div className="w-8 h-8 rounded-full bg-brand-copper/20 text-brand-copper flex items-center justify-center font-bold text-xs uppercase">
             {fullName.charAt(0)}
           </div>
           <div className="overflow-hidden">
@@ -73,7 +72,7 @@ export default async function AdminLayout({
             href="/admin"
             className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
           >
-            <LayoutDashboard className="w-4 h-4 text-brand-gold" />
+            <LayoutDashboard className="w-4 h-4 text-brand-copper" />
             <span>Dashboard Overview</span>
           </Link>
 
@@ -81,7 +80,7 @@ export default async function AdminLayout({
             href="/admin/properties"
             className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
           >
-            <Building className="w-4 h-4 text-brand-gold" />
+            <Building className="w-4 h-4 text-brand-copper" />
             <span>All Properties</span>
           </Link>
 
@@ -89,7 +88,7 @@ export default async function AdminLayout({
             href="/admin/properties/new"
             className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
           >
-            <PlusCircle className="w-4 h-4 text-brand-gold" />
+            <PlusCircle className="w-4 h-4 text-brand-copper" />
             <span>Add New Listing</span>
           </Link>
 
@@ -97,8 +96,8 @@ export default async function AdminLayout({
             href="/admin/inquiries"
             className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition-colors"
           >
-            <Inbox className="w-4 h-4 text-brand-gold" />
-            <span>Leads & Inquiries</span>
+            <Inbox className="w-4 h-4 text-brand-copper" />
+            <span>Leads &amp; Inquiries</span>
           </Link>
 
           <div className="pt-4 mt-4 border-t border-slate-800">
