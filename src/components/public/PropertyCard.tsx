@@ -6,6 +6,7 @@ import { siteConfig } from '@/config/site';
 import { Badge } from '@/components/ui/Badge';
 import { SafeImage } from '@/components/ui/SafeImage';
 import { MapPin, Bed, Bath, ArrowUpRight, MessageSquare } from 'lucide-react';
+import { getWhatsAppUrl, getPropertyWhatsAppMessage } from '@/lib/whatsapp';
 
 interface PropertyCardProps {
   property: Property;
@@ -25,9 +26,12 @@ export default function PropertyCard({ property, priority = false }: PropertyCar
 
   const statusLabel = plotFileStatusLabel[property.plot_file_status];
 
-  const whatsappMessage = `Hello HomaceBuild & Realators, I am inquiring regarding "${property.title}" (Ref: ${property.reference_code}).`;
+  const whatsappMessage = getPropertyWhatsAppMessage({
+    title: property.title,
+    referenceCode: property.reference_code,
+  });
   const whatsappUrl = siteConfig.contact.whatsapp
-    ? `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`
+    ? getWhatsAppUrl({ message: whatsappMessage })
     : null;
 
   return (

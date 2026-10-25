@@ -5,14 +5,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { siteConfig } from '@/config/site';
 import { Menu, X, Phone, MessageSquare, ShieldCheck } from 'lucide-react';
+import { getWhatsAppUrl } from '@/lib/whatsapp';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const whatsappUrl = siteConfig.contact.whatsapp
-    ? `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(
-        'Hello HomaceBuild & Realators, I am interested in inquiring about property opportunities.'
-      )}`
+    ? getWhatsAppUrl({
+        message: 'Hello HomaceBuild & Realators, I am interested in inquiring about property opportunities.',
+      })
     : null;
 
   return (

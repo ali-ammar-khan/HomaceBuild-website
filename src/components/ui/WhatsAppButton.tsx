@@ -2,6 +2,7 @@ import React from 'react';
 import { MessageSquare } from 'lucide-react';
 import { siteConfig } from '@/config/site';
 import { cn } from '@/lib/utils';
+import { getWhatsAppUrl, getPropertyWhatsAppMessage, formatWhatsAppNumber } from '@/lib/whatsapp';
 
 export interface WhatsAppButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   propertyTitle?: string;
@@ -24,10 +25,13 @@ export function WhatsAppButton({
   }
 
   const message = propertyTitle
-    ? `Hello HomaceBuild & Realators, I am inquiring regarding "${propertyTitle}" (Ref: ${referenceCode || 'N/A'}). Please confirm availability.`
+    ? getPropertyWhatsAppMessage({ title: propertyTitle, referenceCode })
     : `Hello HomaceBuild & Realators, I would like to inquire about real estate opportunities in Islamabad/Rawalpindi (Bahria Town / DHA).`;
 
-  const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(message)}`;
+  const cleanPhone = formatWhatsAppNumber(siteConfig.contact.whatsapp);
+  const whatsappUrl = cleanPhone
+    ? `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`
+    : '#';
 
   const sizes = {
     sm: 'text-xs px-3 py-1.5 gap-1.5 h-8',

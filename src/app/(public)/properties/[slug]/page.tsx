@@ -14,6 +14,7 @@ import { Badge } from '@/components/ui/Badge';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { CallButton } from '@/components/ui/CallButton';
 import { Notification } from '@/components/ui/Notification';
+import { PropertyContextSync } from '@/components/public/PropertyContextSync';
 import {
   MapPin,
   Bed,
@@ -133,6 +134,14 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+      {/* Dynamic Property Context Sync for Floating WhatsApp & Global Controls */}
+      <PropertyContextSync
+        title={typedProperty.title}
+        referenceCode={typedProperty.reference_code}
+        slug={typedProperty.slug}
+        url={canonicalUrl}
+      />
+
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
