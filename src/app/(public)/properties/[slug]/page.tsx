@@ -13,11 +13,17 @@ import InquiryForm from '@/components/public/InquiryForm';
 import { Badge } from '@/components/ui/Badge';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { CallButton } from '@/components/ui/CallButton';
+import { Notification } from '@/components/ui/Notification';
 import {
   MapPin,
   Bed,
   Bath,
   Compass,
+  CheckCircle2,
+  FileCheck,
+  Building2,
+  Share2,
+  ShieldAlert,
 } from 'lucide-react';
 
 export const revalidate = 60;
@@ -31,9 +37,10 @@ interface PropertyPageProps {
 export async function generateMetadata({ params }: PropertyPageProps): Promise<Metadata> {
   const property = await getPropertyBySlug(params.slug);
 
-  if (!property) {
+  if (!property || property.publication_status !== 'published') {
     return {
-      title: 'Property Not Found',
+      title: 'Property Not Found | HomaceBuild and Realators',
+      description: 'The requested property listing is not available or has been removed.',
     };
   }
 
@@ -48,19 +55,34 @@ export async function generateMetadata({ params }: PropertyPageProps): Promise<M
     : `${property.title} available for ${property.purpose} in ${locationText}. Verified listing by ${siteConfig.name}.`;
 
   const imageUrl = property.featured_image || property.images[0] || `${siteConfig.url}/HomaceLogo.png`;
+  const canonicalUrl = `${siteConfig.url}/properties/${property.slug}`;
 
   return {
     title,
     description,
     alternates: {
-      canonical: `${siteConfig.url}/properties/${property.slug}`,
+      canonical: canonicalUrl,
     },
     openGraph: {
       title,
       description,
-      url: `${siteConfig.url}/properties/${property.slug}`,
-      images: [{ url: imageUrl, alt: property.title }],
+      url: canonicalUrl,
+      siteName: siteConfig.name,
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: property.title,
+        },
+      ],
       type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [imageUrl],
     },
   };
 }
@@ -68,7 +90,8 @@ export async function generateMetadata({ params }: PropertyPageProps): Promise<M
 export default async function PropertyDetailPage({ params }: PropertyPageProps) {
   const property = await getPropertyBySlug(params.slug);
 
-  if (!property) {
+  // Return proper 404 for missing or unpublished listings
+  if (!property || property.publication_status !== 'published') {
     notFound();
   }
 
@@ -76,7 +99,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
   const canonicalUrl = `${siteConfig.url}/properties/${typedProperty.slug}`;
   const jsonLd = generatePropertySchema(typedProperty, canonicalUrl);
 
-  // Fetch related listings in the same location area
+  // Fetch up to 3 published related listings in the same territory
   const allRelated = await getPublishedProperties({
     location: typedProperty.area_location.split(' ')[0],
     limit: 4,
@@ -85,21 +108,31 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
 
   const breadcrumbItems = [
     { label: 'Properties', href: '/properties' },
-    { label: typedProperty.area_location, href: `/properties?location=${encodeURIComponent(typedProperty.area_location)}` },
+    {
+      label: typedProperty.area_location,
+      href: `/properties?location=${encodeURIComponent(typedProperty.area_location)}`,
+    },
     { label: typedProperty.title },
   ];
 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', url: siteConfig.url },
     { name: 'Properties', url: `${siteConfig.url}/properties` },
-    { name: typedProperty.area_location, url: `${siteConfig.url}/properties?location=${encodeURIComponent(typedProperty.area_location)}` },
+    {
+      name: typedProperty.area_location,
+      url: `${siteConfig.url}/properties?location=${encodeURIComponent(typedProperty.area_location)}`,
+    },
     { name: typedProperty.title, url: canonicalUrl },
   ]);
 
   const displayImages = typedProperty.images.length > 0 ? typedProperty.images : ['/HomaceLogo.png'];
 
+  const isSoldOrRented =
+    typedProperty.availability_status === 'sold' ||
+    typedProperty.availability_status === 'rented';
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Schema.org Structured Data */}
       <script
         type="application/ld+json"
@@ -112,25 +145,64 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
 
       <Breadcrumbs items={breadcrumbItems} />
 
+      {/* Availability Status Banner for Sold / Rented / Under Offer */}
+      {typedProperty.availability_status === 'sold' && (
+        <Notification
+          variant="warning"
+          title="Listing Status Notice: Property Sold"
+          message="This property has been successfully transacted and transferred. Please contact our advisory desk to inquire about upcoming or off-market opportunities in this sector."
+          isDismissible={false}
+        />
+      )}
+
+      {typedProperty.availability_status === 'rented' && (
+        <Notification
+          variant="info"
+          title="Listing Status Notice: Currently Rented"
+          message="This property is currently leased out. Contact our advisory desk for alternative executive rentals in this location."
+          isDismissible={false}
+        />
+      )}
+
+      {typedProperty.availability_status === 'under_offer' && (
+        <Notification
+          variant="info"
+          title="Under Active Offer"
+          message="A token deposit has been placed on this listing. Inquiries are being accepted for second-position backup offers."
+          isDismissible={false}
+        />
+      )}
+
       {/* Header Info */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-brand-slate-200">
         <div className="space-y-2">
+          {/* Status Badges */}
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant={typedProperty.purpose === 'sale' ? 'sale' : 'rent'} size="md">
               For {typedProperty.purpose}
             </Badge>
+
             <Badge variant="default" size="md">
               {typedProperty.category.replace('_', ' ')}
             </Badge>
+
             {typedProperty.plot_file_status === 'possession' && (
-              <Badge variant="possession" size="md">Possession</Badge>
+              <Badge variant="possession" size="md">Possession Ready</Badge>
             )}
             {typedProperty.plot_file_status === 'balloted' && (
               <Badge variant="balloted" size="md">Balloted</Badge>
             )}
             {typedProperty.plot_file_status === 'file' && (
-              <Badge variant="file" size="md">File</Badge>
+              <Badge variant="file" size="md">Allocation File</Badge>
             )}
+
+            {typedProperty.availability_status === 'sold' && (
+              <Badge variant="sold" size="md">Sold Out</Badge>
+            )}
+            {typedProperty.availability_status === 'rented' && (
+              <Badge variant="sold" size="md">Rented</Badge>
+            )}
+
             <span className="text-brand-slate-400 font-mono text-xs ml-1">
               Ref: #{typedProperty.reference_code}
             </span>
@@ -143,7 +215,9 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
           <p className="text-xs sm:text-sm text-brand-slate-500 flex items-center gap-1.5">
             <MapPin className="w-4 h-4 text-brand-copper shrink-0" />
             <span>
-              {[typedProperty.sector_block, typedProperty.area_location, typedProperty.city].filter(Boolean).join(', ')}
+              {[typedProperty.sector_block, typedProperty.area_location, typedProperty.city]
+                .filter(Boolean)
+                .join(', ')}
             </span>
           </p>
         </div>
@@ -165,7 +239,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
               referenceCode={typedProperty.reference_code}
               size="md"
             >
-              Inquire via WhatsApp
+              {isSoldOrRented ? 'Inquire Similar via WhatsApp' : 'Inquire via WhatsApp'}
             </WhatsAppButton>
             <CallButton size="md">
               Call Agent
@@ -182,10 +256,10 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
 
       {/* Main Specifications & Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        {/* Left Column: Specifications & Description */}
+        {/* Left 2 Columns: Specifications, Description & Metrics */}
         <div className="lg:col-span-2 space-y-8">
           {/* Overview Metric Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 bg-white rounded-2xl border border-brand-slate-200">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 bg-white rounded-2xl border border-brand-slate-200 shadow-xs">
             <div>
               <span className="text-[11px] font-semibold text-brand-slate-400 uppercase tracking-wider block">
                 Area Size
@@ -205,7 +279,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
                 </span>
                 <span className="text-base font-bold text-brand-navy mt-0.5 block flex items-center gap-1">
                   <Bed className="w-4 h-4 text-brand-azure" />
-                  {typedProperty.bedrooms}
+                  {typedProperty.bedrooms} Beds
                 </span>
               </div>
             )}
@@ -217,7 +291,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
                 </span>
                 <span className="text-base font-bold text-brand-navy mt-0.5 block flex items-center gap-1">
                   <Bath className="w-4 h-4 text-brand-azure" />
-                  {typedProperty.bathrooms}
+                  {typedProperty.bathrooms} Baths
                 </span>
               </div>
             )}
@@ -226,79 +300,128 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
               <span className="text-[11px] font-semibold text-brand-slate-400 uppercase tracking-wider block">
                 Availability
               </span>
-              <span className="text-base font-bold text-emerald-600 mt-0.5 block uppercase">
+              <span
+                className={`text-base font-bold mt-0.5 block uppercase ${
+                  typedProperty.availability_status === 'available'
+                    ? 'text-emerald-600'
+                    : 'text-brand-slate-700'
+                }`}
+              >
                 {typedProperty.availability_status.replace('_', ' ')}
               </span>
             </div>
           </div>
 
           {/* Description Section */}
-          <div className="bg-white rounded-2xl border border-brand-slate-200 p-6 sm:p-8">
+          <div className="bg-white rounded-2xl border border-brand-slate-200 p-6 sm:p-8 shadow-xs">
             <h2 className="text-lg font-bold text-brand-navy mb-4">
-              Property Description
+              Property Overview & Description
             </h2>
             <div className="text-sm text-brand-slate-700 leading-relaxed whitespace-pre-line">
-              {typedProperty.description || 'Contact our advisory desk for comprehensive documentation, transfer procedure, and site visit scheduling.'}
+              {typedProperty.description ||
+                'Contact our direct advisory desk for complete developer documentation, site visit scheduling, and transfer guidance.'}
             </div>
           </div>
 
+          {/* Features and Amenities Section (if provided) */}
+          {typedProperty.features && typedProperty.features.length > 0 && (
+            <div className="bg-white rounded-2xl border border-brand-slate-200 p-6 sm:p-8 shadow-xs">
+              <h2 className="text-lg font-bold text-brand-navy mb-4 flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-brand-azure" />
+                <span>Property Features & Infrastructure</span>
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                {typedProperty.features.map((feature, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center gap-2.5 p-3 rounded-xl bg-brand-slate-50 border border-brand-slate-100 text-brand-slate-800 font-medium"
+                  >
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Technical Specifications Table */}
-          <div className="bg-white rounded-2xl border border-brand-slate-200 p-6 sm:p-8">
-            <h2 className="text-lg font-bold text-brand-navy mb-4">
-              Listing Details & Technical Metrics
+          <div className="bg-white rounded-2xl border border-brand-slate-200 p-6 sm:p-8 shadow-xs">
+            <h2 className="text-lg font-bold text-brand-navy mb-4 flex items-center gap-2">
+              <FileCheck className="w-5 h-5 text-brand-azure" />
+              <span>Technical & Legal Documentation Metrics</span>
             </h2>
             <dl className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-xs">
               <div className="border-b border-brand-slate-100 pb-2">
                 <dt className="text-brand-slate-500 font-medium">Reference Code</dt>
-                <dd className="font-semibold text-brand-slate-800 font-mono mt-0.5">#{typedProperty.reference_code}</dd>
+                <dd className="font-semibold text-brand-slate-900 font-mono mt-0.5">
+                  #{typedProperty.reference_code}
+                </dd>
               </div>
 
               <div className="border-b border-brand-slate-100 pb-2">
-                <dt className="text-brand-slate-500 font-medium">Purpose</dt>
-                <dd className="font-semibold text-brand-slate-800 capitalize mt-0.5">{typedProperty.purpose}</dd>
+                <dt className="text-brand-slate-500 font-medium">Transaction Purpose</dt>
+                <dd className="font-semibold text-brand-slate-900 capitalize mt-0.5">
+                  For {typedProperty.purpose}
+                </dd>
               </div>
 
               <div className="border-b border-brand-slate-100 pb-2">
                 <dt className="text-brand-slate-500 font-medium">Property Category</dt>
-                <dd className="font-semibold text-brand-slate-800 capitalize mt-0.5">{typedProperty.category.replace('_', ' ')}</dd>
+                <dd className="font-semibold text-brand-slate-900 capitalize mt-0.5">
+                  {typedProperty.category.replace('_', ' ')}
+                </dd>
               </div>
 
               <div className="border-b border-brand-slate-100 pb-2">
                 <dt className="text-brand-slate-500 font-medium">Local Marla Standard</dt>
-                <dd className="font-semibold text-brand-slate-800 mt-0.5">
-                  1 Marla = {typedProperty.marla_sqft_standard} sq ft (Bahria/DHA/CDA convention)
+                <dd className="font-semibold text-brand-slate-900 mt-0.5">
+                  1 Marla = {typedProperty.marla_sqft_standard} sq ft (Bahria/DHA standard)
                 </dd>
               </div>
 
               <div className="border-b border-brand-slate-100 pb-2">
                 <dt className="text-brand-slate-500 font-medium">Normalized Marla Size</dt>
-                <dd className="font-semibold text-brand-slate-800 mt-0.5">
+                <dd className="font-semibold text-brand-slate-900 mt-0.5">
                   {Number(typedProperty.area_in_marla).toFixed(2)} Marla
                 </dd>
               </div>
 
               <div className="border-b border-brand-slate-100 pb-2">
-                <dt className="text-brand-slate-500 font-medium">Development & Plot Status</dt>
-                <dd className="font-semibold text-brand-slate-800 capitalize mt-0.5">
+                <dt className="text-brand-slate-500 font-medium">Square Footage</dt>
+                <dd className="font-semibold text-brand-slate-900 mt-0.5">
+                  {Number(typedProperty.area_in_sqft).toLocaleString()} Sq. Ft.
+                </dd>
+              </div>
+
+              <div className="border-b border-brand-slate-100 pb-2">
+                <dt className="text-brand-slate-500 font-medium">Development & Title Status</dt>
+                <dd className="font-semibold text-brand-slate-900 capitalize mt-0.5">
                   {typedProperty.plot_file_status.replace('_', ' ')}
+                </dd>
+              </div>
+
+              <div className="border-b border-brand-slate-100 pb-2">
+                <dt className="text-brand-slate-500 font-medium">Territory / Location</dt>
+                <dd className="font-semibold text-brand-slate-900 mt-0.5">
+                  {typedProperty.area_location}, {typedProperty.city}
                 </dd>
               </div>
             </dl>
           </div>
 
-          {/* Direct-Answer Informational Box (AEO) */}
+          {/* Contextual Advisory Note (AEO) */}
           <div className="bg-brand-azure-tint border border-brand-azure/20 rounded-2xl p-6 text-xs text-brand-slate-700 space-y-2">
             <h4 className="font-bold text-brand-navy flex items-center gap-1.5 text-sm">
               <Compass className="w-4 h-4 text-brand-azure" />
-              <span>Area Standard Note for This Property</span>
+              <span>Town Planning Standard Note</span>
             </h4>
             <p className="leading-relaxed">
-              This property is recorded under the <strong>{typedProperty.marla_sqft_standard} sq ft per Marla</strong> standard. For residential plots in {typedProperty.area_location}, standard plot dimensions follow municipal and developer-approved town planning guidelines.
+              This property is recorded under the <strong>{typedProperty.marla_sqft_standard} sq ft per Marla</strong> standard recognized by town planning authorities in {typedProperty.area_location}. Transfer transactions must be conducted in the official society transfer branch with an approved No Demand Certificate (NDC).
             </p>
           </div>
         </div>
 
-        {/* Right Column: Inquire Form Card */}
+        {/* Right 1 Column: Direct Inquiry Desk */}
         <div className="space-y-6">
           <InquiryForm
             propertyId={typedProperty.id}
