@@ -1,0 +1,54 @@
+# ==============================================================================
+# Caddyfile: Production Reverse Proxy with Automatic Let's Encrypt TLS & HTTP/3
+# ==============================================================================
+
+# Global options
+{
+    email admin@homacebuild.com
+    admin off
+}
+
+# Production Domain Configuration
+# (Replace with your actual domain name e.g., homacebuild.com, www.homacebuild.com)
+{$DOMAIN_NAME:homacebuild.com}, {$WWW_DOMAIN_NAME:www.homacebuild.com} {
+    # Automatic HTTP to HTTPS redirection is enabled by default
+
+    # Modern compression algorithms
+    encode zstd gzip
+
+    # Reverse proxy upstream to the Next.js standalone container
+    reverse_proxy web:3000 {
+        # Health check upstream monitoring
+        health_uri /api/health
+        health_interval 30s
+        health_timeout 5s
+
+        # Header preservation
+        header_up Host {host}
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+
+    # Custom Error Handling
+    handle_errors {
+        respond "{err.status_code} {err.status_text}"
+    }
+
+    # Security Headers (Supplements Next.js internal headers)
+    header {
+        Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+        -Server
+    }
+
+    # Logging
+    log {
+        output stdout
+        format console
+        level INFO
+    }
+}
