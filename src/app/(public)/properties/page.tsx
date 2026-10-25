@@ -1,0 +1,110 @@
+import React from 'react';
+import { Metadata } from 'next';
+import { createClient } from '@/lib/supabase/server';
+import { Property } from '@/types/database';
+import PropertyCard from '@/components/public/PropertyCard';
+import SearchFilterBar from '@/components/public/SearchFilterBar';
+import { Building2, SlidersHorizontal } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Properties for Sale & Rent in Islamabad & Rawalpindi',
+  description: 'Search verified residential plots, houses, apartments, and commercial properties across Bahria Town and DHA.',
+};
+
+export const revalidate = 60;
+
+interface PropertiesPageProps {
+  searchParams: {
+    purpose?: string;
+    category?: string;
+    location?: string;
+    plot_status?: string;
+    sort?: string;
+  };
+}
+
+export default async function PropertiesPage({ searchParams }: PropertiesPageProps) {
+  const supabase = createClient();
+
+  let query = supabase
+    .from('properties')
+    .select('*')
+    .eq('publication_status', 'published');
+
+  if (searchParams.purpose) {
+    query = query.eq('purpose', searchParams.purpose);
+  }
+
+  if (searchParams.category) {
+    query = query.eq('category', searchParams.category);
+  }
+
+  if (searchParams.location) {
+    query = query.ilike('area_location', `%${searchParams.location}%`);
+  }
+
+  if (searchParams.plot_status) {
+    query = query.eq('plot_file_status', searchParams.plot_status);
+  }
+
+  // Sort handling
+  if (searchParams.sort === 'price_asc') {
+    query = query.order('price_pkr', { ascending: true, nullsFirst: false });
+  } else if (searchParams.sort === 'price_desc') {
+    query = query.order('price_pkr', { ascending: false, nullsFirst: false });
+  } else if (searchParams.sort === 'area_desc') {
+    query = query.order('area_in_marla', { ascending: false });
+  } else {
+    query = query.order('created_at', { ascending: false });
+  }
+
+  const { data: properties } = await query;
+  const listings: Property[] = properties || [];
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+      {/* Page Header */}
+      <div>
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-brand-navy">
+          Property Directory
+        </h1>
+        <p className="text-xs sm:text-sm text-slate-500 mt-1">
+          Explore genuine residential and commercial opportunities across Bahria Town, DHA, and Islamabad.
+        </p>
+      </div>
+
+      {/* Filter Component */}
+      <SearchFilterBar
+        initialPurpose={searchParams.purpose}
+        initialCategory={searchParams.category}
+        initialLocation={searchParams.location}
+      />
+
+      {/* Results Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-slate-200">
+        <p className="text-xs sm:text-sm text-slate-600 font-medium">
+          Showing <span className="font-bold text-slate-900">{listings.length}</span> verified listing{listings.length === 1 ? '' : 's'}
+        </p>
+      </div>
+
+      {/* Properties Grid */}
+      {listings.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {listings.map((property) => (
+            <PropertyCard key={property.id} property={property} />
+          ))}
+        </div>
+      ) : (
+        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center max-w-lg mx-auto">
+          <Building2 className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+          <h3 className="text-base font-semibold text-slate-800">
+            No Listings Found Matching Criteria
+          </h3>
+          <p className="text-xs text-slate-500 mt-1">
+            Try adjusting your location or category filters, or contact us directly to source specific off-market opportunities.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
