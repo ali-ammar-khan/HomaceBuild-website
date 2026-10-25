@@ -262,7 +262,10 @@ async function runE2EFunctionalAudit() {
   // 9. AREA CALCULATOR TOOL INTEGRITY
   // -------------------------------------------------------------------------
   console.log('\n--- 9. Marla & Area Calculator Tool ---');
-  const calculatorContent = fs.readFileSync(path.join(rootDir, 'src/app/(public)/tools/area-calculator/page.tsx'), 'utf8');
+  const calculatorComponentPath = path.join(rootDir, 'src/components/public/AreaCalculator.tsx');
+  const calculatorContent = fs.existsSync(calculatorComponentPath)
+    ? fs.readFileSync(calculatorComponentPath, 'utf8')
+    : fs.readFileSync(path.join(rootDir, 'src/app/(public)/tools/area-calculator/page.tsx'), 'utf8');
 
   assert(
     calculatorContent.includes('AREA_STANDARDS.BAHRIA_DHA_CDA') &&

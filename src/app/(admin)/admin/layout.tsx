@@ -1,4 +1,5 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -11,6 +12,15 @@ import {
   LogOut,
   ExternalLink,
 } from 'lucide-react';
+
+export const metadata: Metadata = {
+  title: 'Staff Administration Portal | HomaceBuild and Realators',
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+  },
+};
 
 export default async function AdminLayout({
   children,

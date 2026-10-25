@@ -23,6 +23,29 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteConfig.url}/services/commercial`,
   },
+  openGraph: {
+    title: 'Commercial Real Estate Services | HomaceBuild and Realators',
+    description:
+      'Commercial plots, plazas, retail shops, and corporate office advisory in Bahria Town and DHA Islamabad.',
+    url: `${siteConfig.url}/services/commercial`,
+    siteName: siteConfig.name,
+    type: 'website',
+    images: [
+      {
+        url: `${siteConfig.url}/HomaceLogo.png`,
+        width: 738,
+        height: 396,
+        alt: 'Commercial Real Estate Services - HomaceBuild',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Commercial Real Estate Services | HomaceBuild',
+    description:
+      'High-yield commercial investments, rental yield modeling, and commercial plot advisory in Bahria Town and DHA.',
+    images: [`${siteConfig.url}/HomaceLogo.png`],
+  },
 };
 
 export default function CommercialServicesPage() {

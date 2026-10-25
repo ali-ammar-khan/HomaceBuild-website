@@ -24,6 +24,29 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteConfig.url}/services/rentals`,
   },
+  openGraph: {
+    title: 'Rental & Leasing Property Services | HomaceBuild and Realators',
+    description:
+      'Executive house rentals, modern apartment leases, and corporate commercial leasing in Bahria Town and DHA Islamabad.',
+    url: `${siteConfig.url}/services/rentals`,
+    siteName: siteConfig.name,
+    type: 'website',
+    images: [
+      {
+        url: `${siteConfig.url}/HomaceLogo.png`,
+        width: 738,
+        height: 396,
+        alt: 'Rental & Leasing Services - HomaceBuild',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Rental & Leasing Property Services | HomaceBuild',
+    description:
+      'Executive rentals and commercial leases across Bahria Town and DHA Islamabad.',
+    images: [`${siteConfig.url}/HomaceLogo.png`],
+  },
 };
 
 export default function RentalServicesPage() {

@@ -9,7 +9,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { CallButton } from '@/components/ui/CallButton';
 import { siteConfig } from '@/config/site';
-import { generateOrganizationSchema, generateFAQSchema } from '@/lib/seo/schema';
+import { generateFAQSchema } from '@/lib/seo/schema';
 import {
   ShieldCheck,
   Compass,
@@ -54,6 +54,13 @@ export const metadata: Metadata = {
     locale: 'en_PK',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'HomaceBuild and Realators | Verified Real Estate',
+    description:
+      'Verified residential plots, luxury villas, commercial plots, and files across Bahria Town and DHA.',
+    images: [`${siteConfig.url}/HomaceLogo.png`],
+  },
 };
 
 // Common real estate FAQs
@@ -88,16 +95,11 @@ const homeFaqs = [
 export default async function HomePage() {
   const publishedListings = await getPublishedProperties({ limit: 6 });
 
-  const orgSchema = generateOrganizationSchema();
   const faqSchema = generateFAQSchema(homeFaqs);
 
   return (
     <div className="space-y-16 md:space-y-24 pb-16">
       {/* Schema.org Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
-      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

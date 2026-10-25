@@ -25,6 +25,29 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteConfig.url}/locations/bahria-town`,
   },
+  openGraph: {
+    title: 'Bahria Town Rawalpindi & Islamabad Real Estate Guide | HomaceBuild',
+    description:
+      'Verified property guide across Bahria Town Phases 1 to 8. Plot sizes, 225 sq ft Marla standard, official transfer process, and live listings.',
+    url: `${siteConfig.url}/locations/bahria-town`,
+    siteName: siteConfig.name,
+    type: 'website',
+    images: [
+      {
+        url: `${siteConfig.url}/HomaceLogo.png`,
+        width: 738,
+        height: 396,
+        alt: 'Bahria Town Real Estate Guide - HomaceBuild',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Bahria Town Real Estate Guide | HomaceBuild and Realators',
+    description:
+      'Verified listings, plot transfer protocols, and 225 sq ft Marla calculations across Bahria Town Phases 1–8.',
+    images: [`${siteConfig.url}/HomaceLogo.png`],
+  },
 };
 
 export const revalidate = 60;
@@ -51,13 +74,13 @@ export default async function BahriaTownPage() {
   const listings = await getPublishedProperties({ location: 'Bahria', limit: 6 });
 
   const breadcrumbItems = [
-    { label: 'Locations', href: '/properties' },
+    { label: 'Locations', href: '/locations' },
     { label: 'Bahria Town Islamabad & Rawalpindi' },
   ];
 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', url: siteConfig.url },
-    { name: 'Locations', url: `${siteConfig.url}/properties` },
+    { name: 'Locations', url: `${siteConfig.url}/locations` },
     { name: 'Bahria Town', url: `${siteConfig.url}/locations/bahria-town` },
   ]);
 

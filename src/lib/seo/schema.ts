@@ -3,20 +3,62 @@ import { siteConfig } from '@/config/site';
 
 /**
  * Validated Schema.org structured data generators.
- * Conforms strictly to Schema.org standards (LandPlot, SingleFamilyResidence, CommercialProperty, RealEstateAgent, BreadcrumbList, FAQPage).
- * Note: While this markup provides semantic entities for search engines and generative models,
- * it does not guarantee SERP rich-cards or rankings.
+ * Conforms strictly to Schema.org standards (LandPlot, SingleFamilyResidence, Apartment, Place, RealEstateAgent, BreadcrumbList, FAQPage).
+ *
+ * NOTE ON SEARCH ENGINES & RICH RESULTS:
+ * Schema.org markup provides explicit semantic context for search engine crawlers,
+ * knowledge graphs, and generative answer engines (ChatGPT, Perplexity, Google AI Overviews).
+ * It does NOT guarantee Google rich snippet displays or specific SERP rankings, which
+ * remain subject to search engine discretion, site authority, and query intent.
  */
 
 export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'RealEstateAgent',
+    '@id': `${siteConfig.url}/#organization`,
     name: siteConfig.name,
+    legalName: siteConfig.name,
+    alternateName: ['Homace Real Estate', 'Homace Realators', 'HomaceBuild'],
     description: siteConfig.description,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/HomaceLogo.png`,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${siteConfig.url}/HomaceLogo.png`,
+      caption: siteConfig.name,
+    },
+    image: `${siteConfig.url}/HomaceLogo.png`,
+    telephone: siteConfig.contact.phone !== 'To be provided' ? siteConfig.contact.phone : undefined,
+    email: siteConfig.contact.email !== 'To be provided' ? siteConfig.contact.email : undefined,
+    priceRange: 'PKR',
+    currenciesAccepted: 'PKR',
+    paymentAccepted: 'Cash, Cheque, Bank Transfer, Pay Order',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Main Commercial Area, Bahria Town',
+      addressLocality: 'Islamabad / Rawalpindi',
+      addressRegion: 'Islamabad Capital Territory / Punjab',
+      postalCode: '46220',
+      addressCountry: 'PK',
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: '33.5247',
+      longitude: '73.0963',
+    },
     areaServed: [
+      {
+        '@type': 'AdministrativeArea',
+        name: 'Bahria Town Rawalpindi',
+      },
+      {
+        '@type': 'AdministrativeArea',
+        name: 'Bahria Town Islamabad',
+      },
+      {
+        '@type': 'AdministrativeArea',
+        name: 'DHA Islamabad',
+      },
       {
         '@type': 'City',
         name: 'Islamabad',
@@ -25,22 +67,15 @@ export function generateOrganizationSchema() {
         '@type': 'City',
         name: 'Rawalpindi',
       },
-      {
-        '@type': 'Place',
-        name: 'Bahria Town Islamabad / Rawalpindi',
-      },
-      {
-        '@type': 'Place',
-        name: 'DHA Islamabad / Rawalpindi',
-      },
     ],
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Islamabad',
-      addressCountry: 'PK',
-    },
-    telephone: siteConfig.contact.phone !== 'To be provided' ? siteConfig.contact.phone : undefined,
-    email: siteConfig.contact.email !== 'To be provided' ? siteConfig.contact.email : undefined,
+    knowsAbout: [
+      'Residential Plot Sales & Transfers',
+      'Commercial Real Estate Acquisition',
+      'Bahria Town Transfer Procedures',
+      'DHA Islamabad Transfer NDC Clearance',
+      'Marla to Square Feet Calculations (225 sq ft standard)',
+      'Property Valuation & Verification',
+    ],
   };
 }
 
@@ -73,19 +108,33 @@ export function generateFAQSchema(faqs: { question: string; answer: string }[]) 
 }
 
 export function generatePropertySchema(property: Property, canonicalUrl: string) {
+  const isRental = property.purpose === 'rent';
   const baseOffer = {
     '@type': 'Offer',
     priceCurrency: 'PKR',
     price: property.is_price_on_call ? undefined : property.price_pkr,
+    priceSpecification: property.is_price_on_call
+      ? undefined
+      : {
+          '@type': 'UnitPriceSpecification',
+          price: property.price_pkr,
+          priceCurrency: 'PKR',
+          unitText: isRental ? 'MONTH' : undefined,
+        },
     availability:
       property.availability_status === 'available'
         ? 'https://schema.org/InStock'
         : 'https://schema.org/SoldOut',
     url: canonicalUrl,
-    businessFunction:
-      property.purpose === 'rent'
-        ? 'https://schema.org/LeaseOut'
-        : 'https://schema.org/Sell',
+    businessFunction: isRental
+      ? 'https://schema.org/LeaseOut'
+      : 'https://schema.org/Sell',
+    seller: {
+      '@type': 'RealEstateAgent',
+      name: siteConfig.name,
+      url: siteConfig.url,
+      telephone: siteConfig.contact.phone !== 'To be provided' ? siteConfig.contact.phone : undefined,
+    },
   };
 
   const commonData = {
@@ -93,17 +142,17 @@ export function generatePropertySchema(property: Property, canonicalUrl: string)
     name: property.title,
     description: property.description || undefined,
     url: canonicalUrl,
-    image: property.images.length > 0 ? property.images : undefined,
+    image: property.images.length > 0 ? property.images : [`${siteConfig.url}/HomaceLogo.png`],
     address: {
       '@type': 'PostalAddress',
       addressLocality: property.city,
-      streetAddress: [property.area_location, property.sector_block].filter(Boolean).join(', '),
+      streetAddress: [property.sector_block, property.area_location].filter(Boolean).join(', '),
       addressCountry: 'PK',
     },
     offers: baseOffer,
   };
 
-  // 1. Plots and Raw Land
+  // 1. Plots and Land (Residential & Commercial)
   if (
     property.category === 'residential_plot' ||
     property.category === 'commercial_plot'
@@ -115,11 +164,12 @@ export function generatePropertySchema(property: Property, canonicalUrl: string)
         '@type': 'QuantitativeValue',
         value: Number(property.area_in_sqft),
         unitCode: 'FTK', // UN/CEFACT code for Square Foot
+        description: `${property.area_value} ${property.area_unit} (${property.marla_sqft_standard} sq ft/Marla standard)`,
       },
     };
   }
 
-  // 2. Houses and Villas
+  // 2. Houses and Luxury Villas
   if (property.category === 'house') {
     return {
       ...commonData,
@@ -134,7 +184,7 @@ export function generatePropertySchema(property: Property, canonicalUrl: string)
     };
   }
 
-  // 3. Apartments
+  // 3. Apartments and Flats
   if (property.category === 'apartment') {
     return {
       ...commonData,
@@ -149,10 +199,12 @@ export function generatePropertySchema(property: Property, canonicalUrl: string)
     };
   }
 
-  // 4. Commercial Properties (Shop, Office, Plaza)
+  // 4. Commercial Real Estate (Shop, Office, Plaza)
+  // Schema.org does not have a native "CommercialProperty" type; valid standard type is "Place" with additionalType
   return {
     ...commonData,
-    '@type': 'CommercialProperty',
+    '@type': 'Place',
+    additionalType: 'https://schema.org/CommercialBuilding',
     floorSize: {
       '@type': 'QuantitativeValue',
       value: Number(property.area_in_sqft),

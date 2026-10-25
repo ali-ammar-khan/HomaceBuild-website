@@ -12,6 +12,29 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteConfig.url}/terms-of-use`,
   },
+  openGraph: {
+    title: 'Terms of Use | HomaceBuild and Realators',
+    description:
+      'Terms of Use governing property listing representations and advisory agreements at HomaceBuild and Realators.',
+    url: `${siteConfig.url}/terms-of-use`,
+    siteName: siteConfig.name,
+    type: 'website',
+    images: [
+      {
+        url: `${siteConfig.url}/HomaceLogo.png`,
+        width: 738,
+        height: 396,
+        alt: 'Homace Terms of Use',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Terms of Use | HomaceBuild',
+    description:
+      'Terms of Use and advisory agreement for HomaceBuild and Realators.',
+    images: [`${siteConfig.url}/HomaceLogo.png`],
+  },
 };
 
 export default function TermsOfUsePage() {

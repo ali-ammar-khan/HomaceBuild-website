@@ -21,6 +21,29 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteConfig.url}/locations`,
   },
+  openGraph: {
+    title: 'Areas Served | Bahria Town, DHA & Islamabad Real Estate',
+    description:
+      'Explore prime real estate territories served by HomaceBuild and Realators across Bahria Town (Phases 1–8), DHA Islamabad (Phases 1–5), Islamabad CDA sectors, and Rawalpindi.',
+    url: `${siteConfig.url}/locations`,
+    siteName: siteConfig.name,
+    type: 'website',
+    images: [
+      {
+        url: `${siteConfig.url}/HomaceLogo.png`,
+        width: 738,
+        height: 396,
+        alt: 'Homace Real Estate Operational Territories',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Areas Served | Bahria Town, DHA & Islamabad Real Estate',
+    description:
+      'Explore prime real estate territories across Bahria Town, DHA Islamabad, and the twin cities.',
+    images: [`${siteConfig.url}/HomaceLogo.png`],
+  },
 };
 
 export default function LocationsHubPage() {

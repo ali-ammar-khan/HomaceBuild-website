@@ -33,6 +33,21 @@ export const metadata: Metadata = {
     url: `${siteConfig.url}/services`,
     siteName: siteConfig.name,
     type: 'website',
+    images: [
+      {
+        url: `${siteConfig.url}/HomaceLogo.png`,
+        width: 738,
+        height: 396,
+        alt: 'Homace Real Estate Advisory Services',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Real Estate Services in Islamabad & Bahria Town | HomaceBuild',
+    description:
+      'Residential and commercial acquisitions, sales, rental management, plot verification, and title transfer guidance.',
+    images: [`${siteConfig.url}/HomaceLogo.png`],
   },
 };
 

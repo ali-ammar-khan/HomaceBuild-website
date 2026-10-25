@@ -12,6 +12,29 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteConfig.url}/privacy-policy`,
   },
+  openGraph: {
+    title: 'Privacy Policy | HomaceBuild and Realators',
+    description:
+      'Learn how HomaceBuild and Realators protects user information and inquiry privacy.',
+    url: `${siteConfig.url}/privacy-policy`,
+    siteName: siteConfig.name,
+    type: 'website',
+    images: [
+      {
+        url: `${siteConfig.url}/HomaceLogo.png`,
+        width: 738,
+        height: 396,
+        alt: 'Homace Privacy Policy',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Privacy Policy | HomaceBuild',
+    description:
+      'Privacy Policy and data protection standards for HomaceBuild and Realators.',
+    images: [`${siteConfig.url}/HomaceLogo.png`],
+  },
 };
 
 export default function PrivacyPolicyPage() {

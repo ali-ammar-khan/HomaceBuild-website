@@ -33,6 +33,21 @@ export const metadata: Metadata = {
     url: `${siteConfig.url}/about`,
     siteName: siteConfig.name,
     type: 'website',
+    images: [
+      {
+        url: `${siteConfig.url}/HomaceLogo.png`,
+        width: 738,
+        height: 396,
+        alt: 'About HomaceBuild and Realators',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About HomaceBuild and Realators | Verified Real Estate Advisory',
+    description:
+      'Professional real estate brokerage and strategic land advisory across Bahria Town and DHA Islamabad.',
+    images: [`${siteConfig.url}/HomaceLogo.png`],
   },
 };
 

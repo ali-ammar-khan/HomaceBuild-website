@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import Breadcrumbs from '@/components/public/Breadcrumbs';
 import InquiryForm from '@/components/public/InquiryForm';
 import { siteConfig } from '@/config/site';
-import { generateBreadcrumbSchema, generateOrganizationSchema } from '@/lib/seo/schema';
+import { generateBreadcrumbSchema } from '@/lib/seo/schema';
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { CallButton } from '@/components/ui/CallButton';
 import { MapPin, Phone, Mail, ShieldCheck, Clock, CheckCircle2 } from 'lucide-react';
@@ -22,6 +22,21 @@ export const metadata: Metadata = {
     url: `${siteConfig.url}/contact`,
     siteName: siteConfig.name,
     type: 'website',
+    images: [
+      {
+        url: `${siteConfig.url}/HomaceLogo.png`,
+        width: 738,
+        height: 396,
+        alt: 'Contact Homace Advisory Desk',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Contact Property Advisory Desk | HomaceBuild',
+    description:
+      'Direct consultation for plots, luxury villas, and commercial investments in Bahria Town and DHA.',
+    images: [`${siteConfig.url}/HomaceLogo.png`],
   },
 };
 
@@ -30,7 +45,6 @@ export default function ContactPage() {
     { name: 'Home', url: siteConfig.url },
     { name: 'Contact', url: `${siteConfig.url}/contact` },
   ]);
-  const orgSchema = generateOrganizationSchema();
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14 space-y-10">
@@ -38,10 +52,6 @@ export default function ContactPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
       />
 
       <Breadcrumbs items={[{ label: 'Contact Advisory Desk' }]} />

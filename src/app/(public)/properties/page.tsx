@@ -54,6 +54,20 @@ export async function generateMetadata({ searchParams }: PropertiesPageProps): P
       url: `${siteConfig.url}/properties`,
       siteName: siteConfig.name,
       type: 'website',
+      images: [
+        {
+          url: `${siteConfig.url}/HomaceLogo.png`,
+          width: 738,
+          height: 396,
+          alt: 'Homace Property Catalogue',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: generatedTitle,
+      description: generatedDesc,
+      images: [`${siteConfig.url}/HomaceLogo.png`],
     },
   };
 }

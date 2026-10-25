@@ -23,6 +23,29 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteConfig.url}/services/residential`,
   },
+  openGraph: {
+    title: 'Residential Property & Plot Services | HomaceBuild and Realators',
+    description:
+      'Verified residential plots, houses, villas, and apartments in Bahria Town and DHA Islamabad.',
+    url: `${siteConfig.url}/services/residential`,
+    siteName: siteConfig.name,
+    type: 'website',
+    images: [
+      {
+        url: `${siteConfig.url}/HomaceLogo.png`,
+        width: 738,
+        height: 396,
+        alt: 'Residential Property Services - HomaceBuild',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Residential Property Services | HomaceBuild',
+    description:
+      'Verified residential plots, houses, villas, and apartments in Bahria Town and DHA Islamabad.',
+    images: [`${siteConfig.url}/HomaceLogo.png`],
+  },
 };
 
 export default function ResidentialServicesPage() {

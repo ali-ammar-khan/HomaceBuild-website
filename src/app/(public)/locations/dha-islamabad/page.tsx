@@ -25,6 +25,29 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteConfig.url}/locations/dha-islamabad`,
   },
+  openGraph: {
+    title: 'DHA Islamabad & Rawalpindi Real Estate & Plots Guide | HomaceBuild',
+    description:
+      'Verified property guide across DHA Phases 1 to 5 and DHA Valley. Membership verification, NDC transfer protocols, and 225 sq ft Marla standards.',
+    url: `${siteConfig.url}/locations/dha-islamabad`,
+    siteName: siteConfig.name,
+    type: 'website',
+    images: [
+      {
+        url: `${siteConfig.url}/HomaceLogo.png`,
+        width: 738,
+        height: 396,
+        alt: 'DHA Islamabad Real Estate Guide - HomaceBuild',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'DHA Islamabad Real Estate Guide | HomaceBuild and Realators',
+    description:
+      'Verified listings, DHA membership transfer protocols, and 225 sq ft Marla calculations across DHA Phases 1–5.',
+    images: [`${siteConfig.url}/HomaceLogo.png`],
+  },
 };
 
 export const revalidate = 60;
@@ -51,13 +74,13 @@ export default async function DhaIslamabadPage() {
   const listings = await getPublishedProperties({ location: 'DHA', limit: 6 });
 
   const breadcrumbItems = [
-    { label: 'Locations', href: '/properties' },
+    { label: 'Locations', href: '/locations' },
     { label: 'DHA Islamabad & Rawalpindi' },
   ];
 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', url: siteConfig.url },
-    { name: 'Locations', url: `${siteConfig.url}/properties` },
+    { name: 'Locations', url: `${siteConfig.url}/locations` },
     { name: 'DHA Islamabad', url: `${siteConfig.url}/locations/dha-islamabad` },
   ]);
 

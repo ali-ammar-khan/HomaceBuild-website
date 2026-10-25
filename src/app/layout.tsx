@@ -36,6 +36,12 @@ export const metadata: Metadata = {
     locale: 'en_PK',
     type: 'website',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${siteConfig.name} | Real Estate Advisory`,
+    description: siteConfig.description,
+    images: ['/HomaceLogo.png'],
+  },
   robots: {
     index: true,
     follow: true,

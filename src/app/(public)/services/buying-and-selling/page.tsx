@@ -24,6 +24,29 @@ export const metadata: Metadata = {
   alternates: {
     canonical: `${siteConfig.url}/services/buying-and-selling`,
   },
+  openGraph: {
+    title: 'Property Buying & Selling Services | HomaceBuild and Realators',
+    description:
+      'Verified property acquisition and selling services in Bahria Town and DHA Islamabad. Title checking, society transfer protocols, and secure transactions.',
+    url: `${siteConfig.url}/services/buying-and-selling`,
+    siteName: siteConfig.name,
+    type: 'website',
+    images: [
+      {
+        url: `${siteConfig.url}/HomaceLogo.png`,
+        width: 738,
+        height: 396,
+        alt: 'Property Buying & Selling - HomaceBuild',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Property Buying & Selling Services | HomaceBuild',
+    description:
+      'Title checking, society transfer protocols, and secure property transactions in Bahria Town and DHA Islamabad.',
+    images: [`${siteConfig.url}/HomaceLogo.png`],
+  },
 };
 
 export default function BuyingSellingPage() {
