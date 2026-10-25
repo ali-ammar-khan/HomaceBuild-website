@@ -9,15 +9,15 @@ export default function Footer() {
     <footer className="bg-brand-navy-dark text-brand-slate-400 border-t border-brand-slate-800 text-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Column 1: Company Profile with Big, Clear Logo */}
+          {/* Column 1: Company Profile with Clean, Proportional Logo Frame */}
           <div className="space-y-4">
-            <div className="relative h-20 w-64 bg-white p-3 rounded-2xl shadow-md border border-brand-slate-200/80">
+            <div className="relative h-16 sm:h-18 w-56 sm:w-60 bg-white p-2.5 rounded-xl shadow-xs border border-brand-slate-200/90 flex items-center justify-center">
               <Image
                 src="/HomaceLogo.png"
                 alt="HomaceBuild and Realators"
                 fill
-                className="object-contain object-left p-1"
-                sizes="256px"
+                className="object-contain object-center p-1.5"
+                sizes="(max-width: 640px) 224px, 240px"
               />
             </div>
             <p className="text-[11px] font-bold tracking-widest text-brand-copper uppercase">

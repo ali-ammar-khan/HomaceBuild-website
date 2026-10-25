@@ -11,7 +11,6 @@ import PropertyCard from '@/components/public/PropertyCard';
 import PropertyGallery from '@/components/public/PropertyGallery';
 import InquiryForm from '@/components/public/InquiryForm';
 import { Badge } from '@/components/ui/Badge';
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { CallButton } from '@/components/ui/CallButton';
 import { Notification } from '@/components/ui/Notification';
 import { PropertyContextSync } from '@/components/public/PropertyContextSync';
@@ -243,15 +242,8 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
           </div>
 
           <div className="flex items-center gap-2">
-            <WhatsAppButton
-              propertyTitle={typedProperty.title}
-              referenceCode={typedProperty.reference_code}
-              size="md"
-            >
-              {isSoldOrRented ? 'Inquire Similar via WhatsApp' : 'Inquire via WhatsApp'}
-            </WhatsAppButton>
             <CallButton size="md">
-              Call Agent
+              Call Agent: {siteConfig.contact.phone}
             </CallButton>
           </div>
         </div>

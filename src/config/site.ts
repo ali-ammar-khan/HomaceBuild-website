@@ -13,8 +13,8 @@ export const siteConfig = {
 
   // Contact placeholders (populated via environment variables)
   contact: {
-    phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "+92 300 0000000",
-    whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "923000000000", // Central verified WhatsApp number (default placeholder)
+    phone: process.env.NEXT_PUBLIC_CONTACT_PHONE || "+92 300 6100619",
+    whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "923006100619", // Central verified WhatsApp number
     email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@homacebuild.com",
     city: process.env.NEXT_PUBLIC_DEFAULT_CITY || "Islamabad",
     country: "Pakistan",

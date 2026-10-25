@@ -111,7 +111,7 @@ export async function submitInquiry(
       return {
         success: false,
         message:
-          'Submission limit reached. To discuss your property requirement immediately, please contact our advisory desk directly via WhatsApp or phone.',
+          'Submission limit reached. To discuss your property requirement immediately, please call our advisory desk directly at +92 300 6100619.',
       };
     }
 
@@ -148,7 +148,7 @@ export async function submitInquiry(
           return {
             success: false,
             message:
-              'Too many inquiries submitted from your network. Please reach out directly on WhatsApp for prompt assistance.',
+              'Too many inquiries submitted from your network. Please call our advisory desk directly at +92 300 6100619.',
           };
         }
 
@@ -172,7 +172,7 @@ export async function submitInquiry(
           return {
             success: false,
             message:
-              'Unable to store your inquiry at this moment. Please connect with our advisory desk directly via WhatsApp.',
+              'Unable to store your inquiry at this moment. Please call our advisory desk directly at +92 300 6100619.',
           };
         }
 
@@ -184,7 +184,7 @@ export async function submitInquiry(
         return {
           success: false,
           message:
-            'A database connectivity issue occurred. Please reach out via WhatsApp or phone directly.',
+            'A database connectivity issue occurred. Please call our advisory desk directly at +92 300 6100619.',
         };
       }
     } else {
@@ -216,7 +216,7 @@ export async function submitInquiry(
     return {
       success: false,
       message:
-        'A temporary service error occurred while processing your request. Please contact us directly via WhatsApp or phone.',
+        'A temporary service error occurred while processing your request. Please call our advisory desk directly at +92 300 6100619.',
     };
   }
 }

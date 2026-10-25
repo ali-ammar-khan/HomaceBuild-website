@@ -6,7 +6,6 @@ import SearchFilterBar from '@/components/public/SearchFilterBar';
 import PropertyCard from '@/components/public/PropertyCard';
 import InquiryForm from '@/components/public/InquiryForm';
 import { EmptyState } from '@/components/ui/EmptyState';
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { CallButton } from '@/components/ui/CallButton';
 import { siteConfig } from '@/config/site';
 import { generateFAQSchema } from '@/lib/seo/schema';
@@ -138,9 +137,9 @@ export default async function HomePage() {
               >
                 Browse Verified Listings
               </Link>
-              <WhatsAppButton size="lg" className="shadow-md">
-                Talk with an Advisor
-              </WhatsAppButton>
+              <CallButton size="lg" className="shadow-md">
+                Call: {siteConfig.contact.phone}
+              </CallButton>
             </div>
           </div>
 
@@ -603,11 +602,8 @@ export default async function HomePage() {
             </div>
 
             <div className="flex flex-wrap items-center gap-3 pt-2">
-              <WhatsAppButton size="lg" className="shadow-xs">
-                Inquire via WhatsApp
-              </WhatsAppButton>
-              <CallButton size="lg">
-                Call Advisory Desk
+              <CallButton size="lg" className="shadow-xs">
+                Call: {siteConfig.contact.phone}
               </CallButton>
             </div>
           </div>

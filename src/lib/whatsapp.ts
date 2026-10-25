@@ -68,7 +68,7 @@ export function getWhatsAppUrl(options: {
   phone?: string;
   message?: string;
 } = {}): string {
-  const rawNumber = options.phone || siteConfig.contact.whatsapp || '923000000000';
+  const rawNumber = options.phone || siteConfig.contact.whatsapp || '923006100619';
   const cleanNumber = formatWhatsAppNumber(rawNumber);
 
   if (!cleanNumber) {

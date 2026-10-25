@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Breadcrumbs from '@/components/public/Breadcrumbs';
 import { siteConfig } from '@/config/site';
 import { generateBreadcrumbSchema } from '@/lib/seo/schema';
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
+import { CallButton } from '@/components/ui/CallButton';
 import InquiryForm from '@/components/public/InquiryForm';
 import {
   Store,
@@ -194,9 +194,9 @@ export default function CommercialServicesPage() {
             Connect directly with our commercial specialists to review off-market plazas, retail opportunities, or boulevard plots.
           </p>
           <div className="pt-2">
-            <WhatsAppButton size="lg" fullWidth>
-              Discuss Commercial Assets on WhatsApp
-            </WhatsAppButton>
+            <CallButton size="lg" fullWidth>
+              Call Commercial Desk: {siteConfig.contact.phone}
+            </CallButton>
           </div>
         </div>
 

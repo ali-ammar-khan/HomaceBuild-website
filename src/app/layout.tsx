@@ -1,7 +1,14 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { siteConfig } from '@/config/site';
 import { generateOrganizationSchema } from '@/lib/seo/schema';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#0A1E42',
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),

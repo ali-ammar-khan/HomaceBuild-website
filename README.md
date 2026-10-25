@@ -90,7 +90,7 @@ docker run -p 3000:3000 --env-file .env.local homace-website
   ```
 - **Image Storage Sync**:
   ```bash
-  rclone sync supabase:property-images s3:your-new-bucket --progress
+  rclone sync supabase:property-media s3:your-new-bucket --progress
   ```
 
 

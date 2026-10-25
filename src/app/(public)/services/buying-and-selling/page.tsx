@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Breadcrumbs from '@/components/public/Breadcrumbs';
 import { siteConfig } from '@/config/site';
 import { generateBreadcrumbSchema } from '@/lib/seo/schema';
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { CallButton } from '@/components/ui/CallButton';
 import InquiryForm from '@/components/public/InquiryForm';
 import {
@@ -234,9 +233,9 @@ export default function BuyingSellingPage() {
             Whether you want to buy a 10 Marla plot in Bahria Town Phase 8 or liquidate a commercial plaza in DHA, submit your details for a verified response.
           </p>
           <div className="pt-2">
-            <WhatsAppButton size="lg" fullWidth>
-              Direct WhatsApp Discussion
-            </WhatsAppButton>
+            <CallButton size="lg" fullWidth>
+              Call Directly: {siteConfig.contact.phone}
+            </CallButton>
           </div>
         </div>
 

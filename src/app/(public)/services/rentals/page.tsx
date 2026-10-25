@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Breadcrumbs from '@/components/public/Breadcrumbs';
 import { siteConfig } from '@/config/site';
 import { generateBreadcrumbSchema } from '@/lib/seo/schema';
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
+import { CallButton } from '@/components/ui/CallButton';
 import InquiryForm from '@/components/public/InquiryForm';
 import {
   KeyRound,
@@ -166,9 +166,9 @@ export default function RentalServicesPage() {
             Whether you are a landlord listing a luxury property or an executive looking for an immediate rental in Bahria Town or DHA, connect with our rental desk.
           </p>
           <div className="pt-2">
-            <WhatsAppButton size="lg" fullWidth>
-              Inquire via WhatsApp
-            </WhatsAppButton>
+            <CallButton size="lg" fullWidth>
+              Call Rental Desk: {siteConfig.contact.phone}
+            </CallButton>
           </div>
         </div>
 

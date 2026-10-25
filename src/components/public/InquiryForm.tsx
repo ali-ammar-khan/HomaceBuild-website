@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { Button } from '@/components/ui/Button';
 import { Notification } from '@/components/ui/Notification';
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
+import { CallButton } from '@/components/ui/CallButton';
 
 interface InquiryFormProps {
   propertyId?: string;
@@ -161,18 +161,14 @@ export default function InquiryForm({
           {submitting ? 'Transmitting Inquiry...' : 'Submit Secure Inquiry'}
         </Button>
 
-        {siteConfig.contact.whatsapp && (
+        {siteConfig.contact.phone && (
           <div className="pt-4 border-t border-brand-slate-100 text-center space-y-2">
             <span className="text-xs text-brand-slate-500 block">
               Prefer immediate real-time assistance?
             </span>
-            <WhatsAppButton
-              propertyTitle={propertyTitle}
-              referenceCode={referenceCode}
-              fullWidth
-            >
-              Connect Directly on WhatsApp
-            </WhatsAppButton>
+            <CallButton fullWidth size="md">
+              Call Directly: {siteConfig.contact.phone}
+            </CallButton>
           </div>
         )}
       </form>

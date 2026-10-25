@@ -32,7 +32,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
             aria-invalid={Boolean(error)}
             aria-describedby={error ? `${textareaId}-error` : helperText ? `${textareaId}-helper` : undefined}
             className={cn(
-              'w-full px-3.5 py-2.5 bg-brand-slate-50 border border-brand-slate-200 rounded-lg text-sm text-brand-slate-900 placeholder:text-brand-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-cyan/40 focus:border-brand-azure disabled:opacity-50 disabled:bg-brand-slate-100',
+              'w-full px-3.5 py-2.5 bg-brand-slate-50 border border-brand-slate-200 rounded-lg text-base sm:text-sm text-brand-slate-900 placeholder:text-brand-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-cyan/40 focus:border-brand-azure disabled:opacity-50 disabled:bg-brand-slate-100',
               error && 'border-rose-400 focus:ring-rose-200 focus:border-rose-500 bg-rose-50/20',
               className
             )}

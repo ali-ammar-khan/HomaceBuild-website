@@ -4,7 +4,6 @@ import Breadcrumbs from '@/components/public/Breadcrumbs';
 import InquiryForm from '@/components/public/InquiryForm';
 import { siteConfig } from '@/config/site';
 import { generateBreadcrumbSchema } from '@/lib/seo/schema';
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { CallButton } from '@/components/ui/CallButton';
 import { MapPin, Phone, Mail, ShieldCheck, Clock, CheckCircle2 } from 'lucide-react';
 
@@ -131,9 +130,9 @@ export default function ContactPage() {
             </div>
 
             <div className="pt-2">
-              <WhatsAppButton size="lg" fullWidth>
-                Direct WhatsApp Discussion
-              </WhatsAppButton>
+              <CallButton size="lg" fullWidth>
+                Call Directly: {siteConfig.contact.phone}
+              </CallButton>
             </div>
           </div>
 

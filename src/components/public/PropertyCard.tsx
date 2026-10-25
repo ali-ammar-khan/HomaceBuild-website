@@ -5,8 +5,7 @@ import { formatArea, formatPKR } from '@/config/measurements';
 import { siteConfig } from '@/config/site';
 import { Badge } from '@/components/ui/Badge';
 import { SafeImage } from '@/components/ui/SafeImage';
-import { MapPin, Bed, Bath, ArrowUpRight, MessageSquare } from 'lucide-react';
-import { getWhatsAppUrl, getPropertyWhatsAppMessage } from '@/lib/whatsapp';
+import { MapPin, Bed, Bath, ArrowUpRight, Phone } from 'lucide-react';
 
 interface PropertyCardProps {
   property: Property;
@@ -25,14 +24,6 @@ export default function PropertyCard({ property, priority = false }: PropertyCar
   };
 
   const statusLabel = plotFileStatusLabel[property.plot_file_status];
-
-  const whatsappMessage = getPropertyWhatsAppMessage({
-    title: property.title,
-    referenceCode: property.reference_code,
-  });
-  const whatsappUrl = siteConfig.contact.whatsapp
-    ? getWhatsAppUrl({ message: whatsappMessage })
-    : null;
 
   return (
     <article className="bg-white rounded-xl border border-brand-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col group">
@@ -137,15 +128,14 @@ export default function PropertyCard({ property, priority = false }: PropertyCar
               <ArrowUpRight className="w-3.5 h-3.5" />
             </Link>
 
-            {whatsappUrl && (
+            {siteConfig.contact.phone && (
               <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-emerald-50 hover:bg-emerald-600 text-emerald-700 hover:text-white p-2 rounded-lg border border-emerald-200 transition-colors"
-                title="Direct WhatsApp Inquiry"
+                href={`tel:${siteConfig.contact.phone.replace(/\s+/g, '')}`}
+                className="bg-brand-slate-100 hover:bg-brand-navy text-brand-navy hover:text-white p-2.5 rounded-lg border border-brand-slate-200 transition-colors"
+                title={`Call: ${siteConfig.contact.phone}`}
+                aria-label={`Call: ${siteConfig.contact.phone}`}
               >
-                <MessageSquare className="w-4 h-4" />
+                <Phone className="w-4 h-4 text-brand-copper" />
               </a>
             )}
           </div>

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Breadcrumbs from '@/components/public/Breadcrumbs';
 import { siteConfig } from '@/config/site';
 import { generateBreadcrumbSchema } from '@/lib/seo/schema';
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
+import { CallButton } from '@/components/ui/CallButton';
 import {
   MapPin,
   ShieldCheck,
@@ -223,9 +223,9 @@ export default function LocationsHubPage() {
             Our advisory team can confirm active inventory and developer transfer dues for your preferred block.
           </p>
         </div>
-        <WhatsAppButton size="lg">
-          Talk to a Local Specialist
-        </WhatsAppButton>
+        <CallButton size="lg">
+          Call Specialist: {siteConfig.contact.phone}
+        </CallButton>
       </div>
     </div>
   );

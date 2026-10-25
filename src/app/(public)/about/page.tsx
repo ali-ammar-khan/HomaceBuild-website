@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Breadcrumbs from '@/components/public/Breadcrumbs';
 import { siteConfig } from '@/config/site';
 import { generateBreadcrumbSchema } from '@/lib/seo/schema';
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { CallButton } from '@/components/ui/CallButton';
 import {
   ShieldCheck,
@@ -108,21 +107,21 @@ export default function AboutPage() {
             >
               Explore Verified Inventory
             </Link>
-            <WhatsAppButton size="md">
-              Connect on WhatsApp
-            </WhatsAppButton>
+            <CallButton size="md">
+              Call: {siteConfig.contact.phone}
+            </CallButton>
           </div>
         </div>
 
         {/* Brand Visual Card with Logo */}
         <div className="bg-brand-slate-50 border border-brand-slate-200/80 rounded-2xl p-8 flex flex-col items-center justify-center text-center space-y-6">
-          <div className="relative h-24 w-72 bg-white p-3 rounded-2xl shadow-sm border border-brand-slate-200">
+          <div className="relative h-24 sm:h-28 w-72 sm:w-80 bg-white p-3 rounded-2xl shadow-sm border border-brand-slate-200 flex items-center justify-center">
             <Image
               src="/HomaceLogo.png"
               alt="HomaceBuild and Realators Logo"
               fill
-              className="object-contain p-1"
-              sizes="288px"
+              className="object-contain object-center p-2"
+              sizes="320px"
             />
           </div>
 

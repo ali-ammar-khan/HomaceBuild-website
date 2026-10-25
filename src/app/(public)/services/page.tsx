@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Breadcrumbs from '@/components/public/Breadcrumbs';
 import { siteConfig } from '@/config/site';
 import { generateBreadcrumbSchema } from '@/lib/seo/schema';
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
 import { CallButton } from '@/components/ui/CallButton';
 import {
   ShieldCheck,
@@ -275,9 +274,9 @@ export default function ServicesPage() {
           >
             Request Service Consultation
           </Link>
-          <WhatsAppButton size="md">
-            Direct WhatsApp Inquiry
-          </WhatsAppButton>
+          <CallButton size="md">
+            Call: {siteConfig.contact.phone}
+          </CallButton>
         </div>
       </div>
     </div>

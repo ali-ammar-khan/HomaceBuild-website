@@ -9,7 +9,7 @@ import {
   ShieldCheck,
   Info,
 } from 'lucide-react';
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
+import { CallButton } from '@/components/ui/CallButton';
 
 export default function AreaCalculator() {
   const [inputValue, setInputValue] = useState<string>('10');
@@ -239,9 +239,9 @@ export default function AreaCalculator() {
             Before transferring or commencing construction, our team can verify your plot boundaries with society surveyor markers.
           </p>
           <div className="pt-1">
-            <WhatsAppButton size="sm" fullWidth>
-              Inquire on WhatsApp
-            </WhatsAppButton>
+            <CallButton size="sm" fullWidth>
+              Call Specialist: +92 300 6100619
+            </CallButton>
           </div>
         </div>
       </div>

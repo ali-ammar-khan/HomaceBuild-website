@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Breadcrumbs from '@/components/public/Breadcrumbs';
 import { siteConfig } from '@/config/site';
 import { generateBreadcrumbSchema } from '@/lib/seo/schema';
-import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
+import { CallButton } from '@/components/ui/CallButton';
 import InquiryForm from '@/components/public/InquiryForm';
 import {
   Home,
@@ -195,9 +195,9 @@ export default function ResidentialServicesPage() {
             Specify your preferred sector, plot dimensions (e.g., 5 Marla, 10 Marla, or 1 Kanal), and budget. Our residential specialists will respond with authenticated listings.
           </p>
           <div className="pt-2">
-            <WhatsAppButton size="lg" fullWidth>
-              Chat with Residential Advisor
-            </WhatsAppButton>
+            <CallButton size="lg" fullWidth>
+              Call Residential Advisor: {siteConfig.contact.phone}
+            </CallButton>
           </div>
         </div>
 
