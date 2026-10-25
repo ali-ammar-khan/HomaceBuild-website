@@ -92,3 +92,29 @@ docker run -p 3000:3000 --env-file .env.local homace-website
   ```bash
   rclone sync supabase:property-images s3:your-new-bucket --progress
   ```
+
+
+---
+
+## 6. Property Media Architecture & Storage Provider Portability
+
+### A. Storage Key Structure
+All property images are organized with collision-resistant object keys:
+```
+properties/{propertyId}/{uuid}-{sanitizedFilename}.{ext}
+```
+- **Allowed MIME Types**: `image/jpeg`, `image/png`, `image/webp`
+- **Max File Size**: 5 MB per file
+- **Cache Header**: `Cache-Control: 31536000` (1-year immutable caching)
+
+### B. Provider-Agnostic Storage Architecture
+The media system uses a centralized adapter pattern in [`src/lib/storage/propertyMedia.ts`](./src/lib/storage/propertyMedia.ts):
+- **Database Storage**: The database only stores relative storage keys or CDN URLs in `properties.images` (array) and `properties.featured_image` (string).
+- **Public URL Resolution**: Handled via `resolvePublicImageUrl(pathOrUrl)` which dynamically maps relative paths to the active CDN domain.
+- **Provider Switching (e.g. Supabase -> Cloudflare R2 / AWS S3 / MinIO)**:
+  1. Transfer existing objects via `rclone` (see Section 5).
+  2. In [`src/lib/storage/propertyMedia.ts`](./src/lib/storage/propertyMedia.ts), replace the `supabase.storage` calls with the `@aws-sdk/client-s3` (S3/R2 client).
+  3. No changes are needed in UI components, property cards, detail pages, or the PostgreSQL database schema.
+
+### C. Public Resilience & Fallback Handling
+- Public image rendering uses [`SafeImage.tsx`](./src/components/ui/SafeImage.tsx) which wraps `next/image` with automatic error boundaries. If an image returns 404 or fails to load, it automatically falls back to the official company placeholder (`/HomaceLogo.png`) without breaking the UI layout or causing Cumulative Layout Shift (CLS = 0).

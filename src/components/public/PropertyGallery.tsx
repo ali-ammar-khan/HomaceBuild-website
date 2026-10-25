@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
+import { SafeImage } from '@/components/ui/SafeImage';
 
 interface PropertyGalleryProps {
   images: string[];
@@ -41,20 +41,21 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
     <div className="space-y-3">
       {/* Primary Displayed Photo */}
       <div className="relative h-80 sm:h-96 md:h-[480px] rounded-2xl overflow-hidden bg-brand-slate-900 border border-brand-slate-200 group">
-        <Image
+        <SafeImage
           src={displayImages[selectedIndex]}
-          alt={`${title} - Photo ${selectedIndex + 1}`}
+          alt={`${title} - Photo ${selectedIndex + 1} of ${displayImages.length}`}
+          propertyTitle={title}
           fill
           priority
-          className="object-cover transition-transform duration-300 group-hover:scale-[1.01]"
-          sizes="(max-width: 1024px) 100vw, 800px"
+          className="group-hover:scale-[1.01] transition-transform duration-300"
+          sizes="(max-width: 1024px) 100vw, 896px"
         />
 
         {/* Fullscreen Trigger */}
         <button
           type="button"
           onClick={() => setLightboxOpen(true)}
-          className="absolute top-4 right-4 bg-black/60 hover:bg-black/80 text-white p-2.5 rounded-xl backdrop-blur-md transition-all active:scale-95 flex items-center gap-1.5 text-xs font-semibold"
+          className="absolute top-4 right-4 bg-black/60 hover:bg-black/80 text-white p-2.5 rounded-xl backdrop-blur-md transition-all active:scale-95 flex items-center gap-1.5 text-xs font-semibold z-10"
           aria-label="Open full screen gallery"
         >
           <Maximize2 className="w-4 h-4" />
@@ -67,7 +68,7 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
             <button
               type="button"
               onClick={handlePrev}
-              className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white p-2 rounded-full backdrop-blur-sm transition-all active:scale-95"
+              className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white p-2 rounded-full backdrop-blur-sm transition-all active:scale-95 z-10"
               aria-label="Previous photograph"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -75,7 +76,7 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
             <button
               type="button"
               onClick={handleNext}
-              className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white p-2 rounded-full backdrop-blur-sm transition-all active:scale-95"
+              className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white p-2 rounded-full backdrop-blur-sm transition-all active:scale-95 z-10"
               aria-label="Next photograph"
             >
               <ChevronRight className="w-5 h-5" />
@@ -84,7 +85,7 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
         )}
 
         {/* Photo Counter Pill */}
-        <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full font-mono">
+        <div className="absolute bottom-4 left-4 bg-black/60 backdrop-blur-md text-white text-xs px-3 py-1 rounded-full font-mono z-10">
           {selectedIndex + 1} / {displayImages.length}
         </div>
       </div>
@@ -104,7 +105,13 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
               }`}
               aria-label={`Select photograph ${idx + 1}`}
             >
-              <Image src={img} alt={`Thumbnail ${idx + 1}`} fill className="object-cover" sizes="120px" />
+              <SafeImage
+                src={img}
+                alt={`${title} - Thumbnail ${idx + 1}`}
+                propertyTitle={title}
+                fill
+                sizes="120px"
+              />
             </button>
           ))}
         </div>
@@ -152,9 +159,10 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
 
           {/* Large Image Container */}
           <div className="relative w-full max-w-5xl h-[75vh] flex items-center justify-center">
-            <Image
+            <SafeImage
               src={displayImages[selectedIndex]}
-              alt={`${title} - Expanded Photo ${selectedIndex + 1}`}
+              alt={`${title} - Fullscreen View ${selectedIndex + 1}`}
+              propertyTitle={title}
               fill
               className="object-contain"
               sizes="100vw"
@@ -163,7 +171,7 @@ export default function PropertyGallery({ images, title }: PropertyGalleryProps)
           </div>
 
           {/* Bottom Caption */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/70 px-4 py-1.5 rounded-full text-white text-xs font-mono">
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/70 px-4 py-1.5 rounded-full text-white text-xs font-mono z-50">
             Photo {selectedIndex + 1} of {displayImages.length}
           </div>
         </div>

@@ -11,3 +11,4 @@ export * from './WhatsAppButton';
 export * from './CallButton';
 export * from './Modal';
 export * from './Notification';
+export * from './SafeImage';

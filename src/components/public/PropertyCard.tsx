@@ -1,19 +1,19 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Property } from '@/types/database';
 import { formatArea, formatPKR } from '@/config/measurements';
 import { siteConfig } from '@/config/site';
 import { Badge } from '@/components/ui/Badge';
+import { SafeImage } from '@/components/ui/SafeImage';
 import { MapPin, Bed, Bath, ArrowUpRight, MessageSquare } from 'lucide-react';
 
 interface PropertyCardProps {
   property: Property;
+  priority?: boolean;
 }
 
-export default function PropertyCard({ property }: PropertyCardProps) {
+export default function PropertyCard({ property, priority = false }: PropertyCardProps) {
   const displayImage = property.featured_image || property.images[0] || '/HomaceLogo.png';
-  const isLogoPlaceholder = displayImage.includes('HomaceLogo.png');
 
   const plotFileStatusLabel: Record<string, string> = {
     possession: 'Possession Ready',
@@ -35,13 +35,14 @@ export default function PropertyCard({ property }: PropertyCardProps) {
       {/* Property Visual Header */}
       <div className="relative h-56 w-full bg-brand-slate-900 overflow-hidden">
         <Link href={`/properties/${property.slug}`} className="block h-full w-full relative">
-          <Image
+          <SafeImage
             src={displayImage}
-            alt={property.title}
+            alt={`${property.title} in ${property.area_location}`}
+            propertyTitle={property.title}
             fill
-            className={`object-cover transition-transform duration-500 group-hover:scale-105 ${
-              isLogoPlaceholder ? 'p-10 object-contain opacity-85 bg-white' : ''
-            }`}
+            priority={priority}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 384px"
+            className="group-hover:scale-105 transition-transform duration-500"
           />
         </Link>
 
@@ -67,7 +68,7 @@ export default function PropertyCard({ property }: PropertyCardProps) {
         </div>
 
         {/* Reference Code Tag */}
-        <div className="absolute bottom-3 right-3 bg-brand-navy-dark/80 backdrop-blur-sm text-brand-slate-200 text-xs px-2 py-0.5 rounded font-mono border border-white/10">
+        <div className="absolute bottom-3 right-3 bg-brand-navy-dark/80 backdrop-blur-sm text-brand-slate-200 text-xs px-2 py-0.5 rounded font-mono border border-white/10 z-10">
           #{property.reference_code}
         </div>
       </div>

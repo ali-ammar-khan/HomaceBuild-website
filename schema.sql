@@ -345,3 +345,66 @@ CREATE POLICY "Agents update assigned property inquiries"
         AND p.agent_id = auth.uid()
     )
   );
+
+
+-- =========================================================================
+-- 9. SUPABASE STORAGE BUCKET & OBJECT RLS POLICIES
+-- =========================================================================
+
+-- Create the public property-media storage bucket if it does not exist
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES (
+  'property-media',
+  'property-media',
+  true,
+  5242880, -- 5 MB max file size
+  ARRAY['image/jpeg', 'image/png', 'image/webp']::text[]
+)
+ON CONFLICT (id) DO UPDATE SET
+  public = true,
+  file_size_limit = 5242880,
+  allowed_mime_types = ARRAY['image/jpeg', 'image/png', 'image/webp']::text[];
+
+-- Enable RLS on storage.objects
+ALTER TABLE storage.objects ENABLE ROW LEVEL SECURITY;
+
+-- 1. Public Read Policy: Allow anyone (anon + authenticated) to view property photos
+DROP POLICY IF EXISTS "Public can view property media" ON storage.objects;
+CREATE POLICY "Public can view property media"
+  ON storage.objects FOR SELECT
+  TO anon, authenticated
+  USING (bucket_id = 'property-media');
+
+-- 2. Admin Upload Policy: Only authenticated users with admin role can upload
+DROP POLICY IF EXISTS "Admins can upload property media" ON storage.objects;
+CREATE POLICY "Admins can upload property media"
+  ON storage.objects FOR INSERT
+  TO authenticated
+  WITH CHECK (
+    bucket_id = 'property-media' AND
+    public.get_user_role(auth.uid()) = 'admin'
+  );
+
+-- 3. Admin Update/Replace Policy
+DROP POLICY IF EXISTS "Admins can update property media" ON storage.objects;
+CREATE POLICY "Admins can update property media"
+  ON storage.objects FOR UPDATE
+  TO authenticated
+  USING (
+    bucket_id = 'property-media' AND
+    public.get_user_role(auth.uid()) = 'admin'
+  )
+  WITH CHECK (
+    bucket_id = 'property-media' AND
+    public.get_user_role(auth.uid()) = 'admin'
+  );
+
+-- 4. Admin Delete Policy: Only authenticated users with admin role can delete
+DROP POLICY IF EXISTS "Admins can delete property media" ON storage.objects;
+CREATE POLICY "Admins can delete property media"
+  ON storage.objects FOR DELETE
+  TO authenticated
+  USING (
+    bucket_id = 'property-media' AND
+    public.get_user_role(auth.uid()) = 'admin'
+  );
