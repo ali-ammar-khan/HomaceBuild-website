@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/server';
 import { headers } from 'next/headers';
 import crypto from 'crypto';
 import { dispatchInquiryNotification } from '@/lib/notifications/inquiryNotification';
+import { revalidatePath } from 'next/cache';
 
 export type ActionResponse = {
   success: boolean;
@@ -218,4 +219,39 @@ export async function submitInquiry(
         'A temporary service error occurred while processing your request. Please contact us directly via WhatsApp or phone.',
     };
   }
+}
+
+/**
+ * 8. Authorized Staff Action to update lead / inquiry status
+ */
+export async function updateInquiryStatus(inquiryId: string, newStatus: string) {
+  const allowedStatuses = ['new', 'contacted', 'qualified', 'closed', 'spam'];
+  if (!allowedStatuses.includes(newStatus)) {
+    return { success: false, message: 'Invalid inquiry status.' };
+  }
+
+  const supabase = createClient();
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    return { success: false, message: 'Unauthorized: Please log in as staff.' };
+  }
+
+  const { error } = await supabase
+    .from('inquiries')
+    .update({ status: newStatus })
+    .eq('id', inquiryId);
+
+  if (error) {
+    console.error('Update Inquiry Status Error:', error);
+    return { success: false, message: error.message };
+  }
+
+  revalidatePath('/admin');
+  revalidatePath('/admin/inquiries');
+
+  return { success: true, message: `Lead status updated to ${newStatus}.` };
 }
