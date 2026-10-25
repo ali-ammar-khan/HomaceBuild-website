@@ -1,6 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
-import { createClient } from '@/lib/supabase/server';
+import { getPublishedProperties } from '@/lib/propertyService';
 import { Property } from '@/types/database';
 import PropertyCard from '@/components/public/PropertyCard';
 import SearchFilterBar from '@/components/public/SearchFilterBar';
@@ -30,42 +30,7 @@ interface PropertiesPageProps {
 }
 
 export default async function PropertiesPage({ searchParams }: PropertiesPageProps) {
-  const supabase = createClient();
-
-  let query = supabase
-    .from('properties')
-    .select('*')
-    .eq('publication_status', 'published');
-
-  if (searchParams.purpose) {
-    query = query.eq('purpose', searchParams.purpose);
-  }
-
-  if (searchParams.category) {
-    query = query.eq('category', searchParams.category);
-  }
-
-  if (searchParams.location) {
-    query = query.ilike('area_location', `%${searchParams.location}%`);
-  }
-
-  if (searchParams.plot_status) {
-    query = query.eq('plot_file_status', searchParams.plot_status);
-  }
-
-  // Sort handling
-  if (searchParams.sort === 'price_asc') {
-    query = query.order('price_pkr', { ascending: true, nullsFirst: false });
-  } else if (searchParams.sort === 'price_desc') {
-    query = query.order('price_pkr', { ascending: false, nullsFirst: false });
-  } else if (searchParams.sort === 'area_desc') {
-    query = query.order('area_in_marla', { ascending: false });
-  } else {
-    query = query.order('created_at', { ascending: false });
-  }
-
-  const { data: properties } = await query;
-  const listings: Property[] = properties || [];
+  const listings = await getPublishedProperties(searchParams);
 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', url: siteConfig.url },

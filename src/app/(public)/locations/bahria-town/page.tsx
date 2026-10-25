@@ -1,7 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { createClient } from '@/lib/supabase/server';
+import { getPublishedProperties } from '@/lib/propertyService';
 import { Property } from '@/types/database';
 import PropertyCard from '@/components/public/PropertyCard';
 import Breadcrumbs from '@/components/public/Breadcrumbs';
@@ -48,18 +48,7 @@ const bahriaFaqs = [
 ];
 
 export default async function BahriaTownPage() {
-  const supabase = createClient();
-
-  // Fetch properties specifically located in Bahria Town
-  const { data: properties } = await supabase
-    .from('properties')
-    .select('*')
-    .eq('publication_status', 'published')
-    .ilike('area_location', '%Bahria%')
-    .order('created_at', { ascending: false })
-    .limit(6);
-
-  const listings: Property[] = properties || [];
+  const listings = await getPublishedProperties({ location: 'Bahria', limit: 6 });
 
   const breadcrumbItems = [
     { label: 'Locations', href: '/properties' },

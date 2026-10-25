@@ -9,14 +9,15 @@ export default function Footer() {
     <footer className="bg-brand-navy-dark text-brand-slate-400 border-t border-brand-slate-800 text-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Column 1: Company Profile */}
+          {/* Column 1: Company Profile with Big, Clear Logo */}
           <div className="space-y-4">
-            <div className="relative h-14 w-44 bg-white/95 p-2 rounded-lg">
+            <div className="relative h-20 w-64 bg-white p-3 rounded-2xl shadow-md border border-brand-slate-200/80">
               <Image
                 src="/HomaceLogo.png"
                 alt="HomaceBuild and Realators"
                 fill
                 className="object-contain object-left p-1"
+                sizes="256px"
               />
             </div>
             <p className="text-[11px] font-bold tracking-widest text-brand-copper uppercase">
@@ -38,31 +39,31 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/locations/bahria-town" className="hover:text-brand-copper transition-colors flex items-center gap-1.5">
+                <Link href="/locations/bahria-town" prefetch={true} className="hover:text-brand-copper transition-colors flex items-center gap-1.5 active:scale-95">
                   <ArrowRight className="w-3 h-3 text-brand-copper" />
                   Bahria Town Phases 1–8 Guide
                 </Link>
               </li>
               <li>
-                <Link href="/locations/dha-islamabad" className="hover:text-brand-copper transition-colors flex items-center gap-1.5">
+                <Link href="/locations/dha-islamabad" prefetch={true} className="hover:text-brand-copper transition-colors flex items-center gap-1.5 active:scale-95">
                   <ArrowRight className="w-3 h-3 text-brand-copper" />
                   DHA Islamabad & Rawalpindi Guide
                 </Link>
               </li>
               <li>
-                <Link href="/properties?category=residential_plot" className="hover:text-brand-copper transition-colors flex items-center gap-1.5">
+                <Link href="/properties?category=residential_plot" prefetch={true} className="hover:text-brand-copper transition-colors flex items-center gap-1.5 active:scale-95">
                   <ArrowRight className="w-3 h-3 text-brand-copper" />
                   Residential Plots (5, 10 Marla, 1, 2 Kanal)
                 </Link>
               </li>
               <li>
-                <Link href="/properties?category=commercial_plot" className="hover:text-brand-copper transition-colors flex items-center gap-1.5">
+                <Link href="/properties?category=commercial_plot" prefetch={true} className="hover:text-brand-copper transition-colors flex items-center gap-1.5 active:scale-95">
                   <ArrowRight className="w-3 h-3 text-brand-copper" />
                   Commercial Plots & Commercial Plazas
                 </Link>
               </li>
               <li>
-                <Link href="/properties?plot_status=possession" className="hover:text-brand-copper transition-colors flex items-center gap-1.5">
+                <Link href="/properties?plot_status=possession" prefetch={true} className="hover:text-brand-copper transition-colors flex items-center gap-1.5 active:scale-95">
                   <ArrowRight className="w-3 h-3 text-brand-copper" />
                   Possession-Ready Properties
                 </Link>
@@ -77,27 +78,27 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/properties?category=house" className="hover:text-brand-azure-light transition-colors">
+                <Link href="/properties?category=house" prefetch={true} className="hover:text-brand-azure-light transition-colors active:scale-95">
                   Houses & Luxury Villas
                 </Link>
               </li>
               <li>
-                <Link href="/properties?category=apartment" className="hover:text-brand-azure-light transition-colors">
+                <Link href="/properties?category=apartment" prefetch={true} className="hover:text-brand-azure-light transition-colors active:scale-95">
                   Modern Apartments & Flats
                 </Link>
               </li>
               <li>
-                <Link href="/properties?category=shop" className="hover:text-brand-azure-light transition-colors">
+                <Link href="/properties?category=shop" prefetch={true} className="hover:text-brand-azure-light transition-colors active:scale-95">
                   Commercial Shops & Retail Outlets
                 </Link>
               </li>
               <li>
-                <Link href="/properties?category=office" className="hover:text-brand-azure-light transition-colors">
+                <Link href="/properties?category=office" prefetch={true} className="hover:text-brand-azure-light transition-colors active:scale-95">
                   Corporate Offices
                 </Link>
               </li>
               <li>
-                <Link href="/properties?plot_status=file" className="hover:text-brand-azure-light transition-colors">
+                <Link href="/properties?plot_status=file" prefetch={true} className="hover:text-brand-azure-light transition-colors active:scale-95">
                   Balloted Plots & Verified Files
                 </Link>
               </li>
@@ -133,7 +134,8 @@ export default function Footer() {
               <div className="pt-2">
                 <Link
                   href="/contact"
-                  className="inline-block bg-brand-slate-800 hover:bg-brand-slate-700 text-white text-xs px-3.5 py-2 rounded border border-brand-slate-700 transition-colors"
+                  prefetch={true}
+                  className="inline-block bg-brand-slate-800 hover:bg-brand-slate-700 text-white text-xs px-3.5 py-2 rounded border border-brand-slate-700 transition-colors active:scale-95"
                 >
                   Send On-Site Inquiry
                 </Link>
@@ -148,13 +150,13 @@ export default function Footer() {
             © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <Link href="/properties" className="hover:text-brand-slate-400 transition-colors">
+            <Link href="/properties" prefetch={true} className="hover:text-brand-slate-400 transition-colors">
               Listings Directory
             </Link>
-            <Link href="/contact" className="hover:text-brand-slate-400 transition-colors">
+            <Link href="/contact" prefetch={true} className="hover:text-brand-slate-400 transition-colors">
               Contact
             </Link>
-            <Link href="/login" className="hover:text-brand-slate-400 transition-colors">
+            <Link href="/login" prefetch={true} className="hover:text-brand-slate-400 transition-colors">
               Staff Portal
             </Link>
           </div>

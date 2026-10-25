@@ -16,7 +16,7 @@ export default function Navbar() {
     : null;
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-brand-slate-200 shadow-sm">
+    <header className="sticky top-0 z-40 bg-white/98 backdrop-blur-md border-b border-brand-slate-200 shadow-sm transition-all">
       {/* Top Advisory Bar */}
       <div className="bg-brand-navy-dark text-brand-slate-300 text-xs py-2 px-4 border-b border-brand-navy">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
@@ -43,7 +43,8 @@ export default function Navbar() {
             )}
             <Link
               href="/login"
-              className="text-brand-slate-400 hover:text-white transition-colors border-l border-brand-slate-800 pl-3"
+              prefetch={true}
+              className="text-brand-slate-400 hover:text-white transition-colors border-l border-brand-slate-800 pl-3 active:scale-95"
             >
               Staff Portal
             </Link>
@@ -51,63 +52,76 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Main Navigation */}
+      {/* Main Navigation with Prominent, Generous Logo Presence */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Company Brand Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="relative h-14 w-44 flex items-center">
+        <div className="flex items-center justify-between h-24 sm:h-28">
+          {/* Company Brand Logo - Large, Prominent, Razor-Sharp */}
+          <Link
+            href="/"
+            prefetch={true}
+            className="flex items-center group py-2 active:scale-[0.98] transition-transform"
+            title="HomaceBuild and Realators"
+          >
+            <div className="relative h-18 w-56 sm:h-22 sm:w-72 md:h-24 md:w-84 lg:h-24 lg:w-96 flex items-center">
               <Image
                 src="/HomaceLogo.png"
-                alt="HomaceBuild and Realators Logo"
+                alt="HomaceBuild and Realators - We Engineer Your Dreams"
                 fill
                 priority
-                className="object-contain object-left"
+                className="object-contain object-left transition-transform duration-200 group-hover:scale-[1.02]"
+                sizes="(max-width: 640px) 240px, (max-width: 768px) 300px, 380px"
               />
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-8 text-sm font-medium text-brand-slate-700">
+          <nav className="hidden lg:flex items-center gap-7 text-sm font-semibold text-brand-slate-700">
             <Link
               href="/"
-              className="hover:text-brand-azure transition-colors py-1"
+              prefetch={true}
+              className="hover:text-brand-azure py-1 transition-colors active:scale-95"
             >
               Home
             </Link>
             <Link
               href="/properties?purpose=sale"
-              className="hover:text-brand-azure transition-colors py-1"
+              prefetch={true}
+              className="hover:text-brand-azure py-1 transition-colors active:scale-95"
             >
               For Sale
             </Link>
             <Link
               href="/properties?purpose=rent"
-              className="hover:text-brand-azure transition-colors py-1"
+              prefetch={true}
+              className="hover:text-brand-azure py-1 transition-colors active:scale-95"
             >
               For Rent
             </Link>
             <Link
               href="/properties?category=residential_plot"
-              className="hover:text-brand-azure transition-colors py-1"
+              prefetch={true}
+              className="hover:text-brand-azure py-1 transition-colors active:scale-95"
             >
               Plots
             </Link>
             <Link
               href="/locations/bahria-town"
-              className="hover:text-brand-azure transition-colors py-1"
+              prefetch={true}
+              className="hover:text-brand-azure py-1 transition-colors active:scale-95"
             >
               Bahria Town
             </Link>
             <Link
               href="/locations/dha-islamabad"
-              className="hover:text-brand-azure transition-colors py-1"
+              prefetch={true}
+              className="hover:text-brand-azure py-1 transition-colors active:scale-95"
             >
               DHA
             </Link>
             <Link
               href="/contact"
-              className="hover:text-brand-azure transition-colors py-1"
+              prefetch={true}
+              className="hover:text-brand-azure py-1 transition-colors active:scale-95"
             >
               Contact
             </Link>
@@ -120,7 +134,7 @@ export default function Navbar() {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-all shadow-sm hover:shadow"
+                className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-sm hover:shadow active:scale-95"
               >
                 <MessageSquare className="w-4 h-4" />
                 <span>WhatsApp</span>
@@ -129,9 +143,10 @@ export default function Navbar() {
 
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 bg-brand-copper hover:bg-brand-copper-hover text-white px-4 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-sm"
+              prefetch={true}
+              className="inline-flex items-center gap-2 bg-brand-copper hover:bg-brand-copper-hover text-white px-4 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-sm active:scale-95"
             >
-              Schedule Consultation
+              Consultation
             </Link>
           </div>
 
@@ -140,10 +155,10 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-brand-slate-600 hover:text-brand-slate-900 hover:bg-brand-slate-100"
+              className="p-2 rounded-lg text-brand-slate-600 hover:text-brand-slate-900 hover:bg-brand-slate-100 active:scale-95"
               aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
             </button>
           </div>
         </div>
@@ -155,57 +170,65 @@ export default function Navbar() {
           <div className="flex flex-col space-y-2 text-base font-medium text-brand-slate-800">
             <Link
               href="/"
+              prefetch={true}
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
+              className="px-3 py-2 rounded-md hover:bg-brand-slate-50 active:scale-95"
             >
               Home
             </Link>
             <Link
               href="/properties?purpose=sale"
+              prefetch={true}
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
+              className="px-3 py-2 rounded-md hover:bg-brand-slate-50 active:scale-95"
             >
               For Sale
             </Link>
             <Link
               href="/properties?purpose=rent"
+              prefetch={true}
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
+              className="px-3 py-2 rounded-md hover:bg-brand-slate-50 active:scale-95"
             >
               For Rent
             </Link>
             <Link
               href="/properties?category=residential_plot"
+              prefetch={true}
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
+              className="px-3 py-2 rounded-md hover:bg-brand-slate-50 active:scale-95"
             >
               Plots & Files
             </Link>
             <Link
               href="/locations/bahria-town"
+              prefetch={true}
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
+              className="px-3 py-2 rounded-md hover:bg-brand-slate-50 active:scale-95"
             >
               Bahria Town Properties
             </Link>
             <Link
               href="/locations/dha-islamabad"
+              prefetch={true}
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
+              className="px-3 py-2 rounded-md hover:bg-brand-slate-50 active:scale-95"
             >
               DHA Properties
             </Link>
             <Link
               href="/contact"
+              prefetch={true}
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
+              className="px-3 py-2 rounded-md hover:bg-brand-slate-50 active:scale-95"
             >
               Contact Us
             </Link>
             <Link
               href="/login"
+              prefetch={true}
               onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded-md text-brand-azure font-semibold hover:bg-brand-slate-50"
+              className="px-3 py-2 rounded-md text-brand-azure font-semibold hover:bg-brand-slate-50 active:scale-95"
             >
               Staff Dashboard Sign In
             </Link>
@@ -217,7 +240,7 @@ export default function Navbar() {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full text-center py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium flex items-center justify-center gap-2"
+                className="w-full text-center py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-medium flex items-center justify-center gap-2 active:scale-95"
               >
                 <MessageSquare className="w-5 h-5" />
                 Contact via WhatsApp
@@ -225,8 +248,9 @@ export default function Navbar() {
             )}
             <Link
               href="/contact"
+              prefetch={true}
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center py-3 bg-brand-copper hover:bg-brand-copper-hover text-white rounded-lg font-semibold"
+              className="w-full text-center py-3 bg-brand-copper hover:bg-brand-copper-hover text-white rounded-lg font-semibold active:scale-95"
             >
               Submit Property Inquiry
             </Link>

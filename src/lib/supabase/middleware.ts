@@ -2,6 +2,20 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function updateSession(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  // FAST PATH: Only run auth session validation for protected /admin routes or /login
+  // Public routes (/ , /properties, /locations/*, /contact) bypass auth check completely for instant navigation
+  const isAuthRoute = pathname.startsWith('/admin') || pathname === '/login';
+
+  if (!isAuthRoute) {
+    return NextResponse.next({
+      request: {
+        headers: request.headers,
+      },
+    });
+  }
+
   let response = NextResponse.next({
     request: {
       headers: request.headers,
@@ -11,9 +25,9 @@ export async function updateSession(request: NextRequest) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  // If Supabase credentials are not configured yet, allow public access but guard /admin
+  // If Supabase credentials are not configured, guard /admin without hanging
   if (!supabaseUrl || !supabaseAnonKey || supabaseUrl.includes('placeholder')) {
-    if (request.nextUrl.pathname.startsWith('/admin')) {
+    if (pathname.startsWith('/admin')) {
       const url = request.nextUrl.clone();
       url.pathname = '/login';
       return NextResponse.redirect(url);
@@ -68,15 +82,15 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   // Route protection for admin area
-  if (request.nextUrl.pathname.startsWith('/admin') && !user) {
+  if (pathname.startsWith('/admin') && !user) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
-    url.searchParams.set('redirectedFrom', request.nextUrl.pathname);
+    url.searchParams.set('redirectedFrom', pathname);
     return NextResponse.redirect(url);
   }
 
   // If user is logged in and visits login page, redirect to admin
-  if (request.nextUrl.pathname === '/login' && user) {
+  if (pathname === '/login' && user) {
     const url = request.nextUrl.clone();
     url.pathname = '/admin';
     return NextResponse.redirect(url);

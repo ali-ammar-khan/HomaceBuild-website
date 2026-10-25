@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { createClient } from '@/lib/supabase/server';
+import { getPublishedProperties } from '@/lib/propertyService';
 import { Property } from '@/types/database';
 import SearchFilterBar from '@/components/public/SearchFilterBar';
 import PropertyCard from '@/components/public/PropertyCard';
@@ -11,17 +11,7 @@ import { ShieldCheck, Compass, MapPin, Building2, CheckCircle2, ArrowRight } fro
 export const revalidate = 60; // ISR cache revalidation every 60s
 
 export default async function HomePage() {
-  const supabase = createClient();
-
-  // Fetch published properties from PostgreSQL
-  const { data: properties } = await supabase
-    .from('properties')
-    .select('*')
-    .eq('publication_status', 'published')
-    .order('created_at', { ascending: false })
-    .limit(6);
-
-  const publishedListings: Property[] = properties || [];
+  const publishedListings = await getPublishedProperties({ limit: 6 });
 
   return (
     <div className="space-y-16 md:space-y-24 pb-16">

@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { createClient } from '@/lib/supabase/server';
+import { getPropertyBySlug, getPublishedProperties } from '@/lib/propertyService';
 import { Property } from '@/types/database';
 import { formatArea, formatPKR } from '@/config/measurements';
 import { generatePropertySchema, generateBreadcrumbSchema } from '@/lib/seo/schema';
@@ -31,13 +31,7 @@ interface PropertyPageProps {
 }
 
 export async function generateMetadata({ params }: PropertyPageProps): Promise<Metadata> {
-  const supabase = createClient();
-  const { data: property } = await supabase
-    .from('properties')
-    .select('*')
-    .eq('slug', params.slug)
-    .eq('publication_status', 'published')
-    .single();
+  const property = await getPropertyBySlug(params.slug);
 
   if (!property) {
     return {
@@ -74,14 +68,7 @@ export async function generateMetadata({ params }: PropertyPageProps): Promise<M
 }
 
 export default async function PropertyDetailPage({ params }: PropertyPageProps) {
-  const supabase = createClient();
-
-  const { data: property } = await supabase
-    .from('properties')
-    .select('*')
-    .eq('slug', params.slug)
-    .eq('publication_status', 'published')
-    .single();
+  const property = await getPropertyBySlug(params.slug);
 
   if (!property) {
     notFound();
@@ -92,15 +79,11 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
   const jsonLd = generatePropertySchema(typedProperty, canonicalUrl);
 
   // Fetch related listings in the same location area
-  const { data: relatedData } = await supabase
-    .from('properties')
-    .select('*')
-    .eq('publication_status', 'published')
-    .neq('id', typedProperty.id)
-    .ilike('area_location', `%${typedProperty.area_location.split(' ')[0]}%`)
-    .limit(3);
-
-  const relatedProperties: Property[] = relatedData || [];
+  const allRelated = await getPublishedProperties({
+    location: typedProperty.area_location.split(' ')[0],
+    limit: 4,
+  });
+  const relatedProperties = allRelated.filter((p) => p.id !== typedProperty.id).slice(0, 3);
 
   const breadcrumbItems = [
     { label: 'Properties', href: '/properties' },

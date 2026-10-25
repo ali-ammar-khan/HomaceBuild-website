@@ -41,14 +41,14 @@ export default async function AdminLayout({
     <div className="min-h-screen bg-slate-100 flex flex-col md:flex-row">
       {/* Sidebar Navigation */}
       <aside className="w-full md:w-64 bg-brand-navyDark text-slate-300 flex flex-col border-r border-slate-800">
-        {/* Brand Header */}
+        {/* Brand Header with Clean Logo Display */}
         <div className="p-5 border-b border-slate-800 flex items-center justify-between">
-          <Link href="/admin" className="relative h-10 w-36 block">
+          <Link href="/admin" className="relative h-14 w-44 block bg-white p-2 rounded-xl shadow-sm">
             <Image
               src="/HomaceLogo.png"
               alt="Homace Logo"
               fill
-              className="object-contain object-left brightness-0 invert"
+              className="object-contain object-center"
             />
           </Link>
           <span className="text-[10px] font-mono bg-brand-gold/20 text-brand-gold px-2 py-0.5 rounded uppercase">

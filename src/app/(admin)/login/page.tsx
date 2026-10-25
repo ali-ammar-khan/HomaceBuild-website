@@ -38,12 +38,12 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-slate-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <Link href="/" className="inline-block relative h-16 w-48 mb-4">
+        <Link href="/" className="inline-block relative h-20 w-64 mb-6 bg-white p-3 rounded-2xl shadow-lg border border-brand-slate-200">
           <Image
             src="/HomaceLogo.png"
             alt="HomaceBuild and Realators"
             fill
-            className="object-contain brightness-0 invert"
+            className="object-contain object-center p-1"
           />
         </Link>
         <h2 className="text-xl font-bold tracking-tight text-white">
