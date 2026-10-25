@@ -38,15 +38,15 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/properties?location=Bahria+Town" className="hover:text-brand-copper transition-colors flex items-center gap-1.5">
+                <Link href="/locations/bahria-town" className="hover:text-brand-copper transition-colors flex items-center gap-1.5">
                   <ArrowRight className="w-3 h-3 text-brand-copper" />
-                  Bahria Town Phases 1–8
+                  Bahria Town Phases 1–8 Guide
                 </Link>
               </li>
               <li>
-                <Link href="/properties?location=DHA" className="hover:text-brand-copper transition-colors flex items-center gap-1.5">
+                <Link href="/locations/dha-islamabad" className="hover:text-brand-copper transition-colors flex items-center gap-1.5">
                   <ArrowRight className="w-3 h-3 text-brand-copper" />
-                  DHA Islamabad & Rawalpindi
+                  DHA Islamabad & Rawalpindi Guide
                 </Link>
               </li>
               <li>

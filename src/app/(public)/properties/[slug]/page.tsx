@@ -6,19 +6,20 @@ import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
 import { Property } from '@/types/database';
 import { formatArea, formatPKR } from '@/config/measurements';
-import { generatePropertySchema } from '@/lib/seo/schema';
+import { generatePropertySchema, generateBreadcrumbSchema } from '@/lib/seo/schema';
 import { siteConfig } from '@/config/site';
+import Breadcrumbs from '@/components/public/Breadcrumbs';
+import PropertyCard from '@/components/public/PropertyCard';
 import InquiryForm from '@/components/public/InquiryForm';
 import {
   MapPin,
   Bed,
   Bath,
-  Maximize2,
-  Calendar,
-  CheckCircle,
   MessageSquare,
   ShieldCheck,
   Building,
+  HelpCircle,
+  Compass,
 } from 'lucide-react';
 
 export const revalidate = 60;
@@ -51,7 +52,7 @@ export async function generateMetadata({ params }: PropertyPageProps): Promise<M
 
   const title = `${property.title} | ${priceText} in ${property.area_location}`;
   const description = property.description
-    ? property.description.substring(0, 160)
+    ? property.description.substring(0, 155)
     : `${property.title} available for ${property.purpose} in ${locationText}. Verified listing by ${siteConfig.name}.`;
 
   const imageUrl = property.featured_image || property.images[0] || `${siteConfig.url}/HomaceLogo.png`;
@@ -59,6 +60,9 @@ export async function generateMetadata({ params }: PropertyPageProps): Promise<M
   return {
     title,
     description,
+    alternates: {
+      canonical: `${siteConfig.url}/properties/${property.slug}`,
+    },
     openGraph: {
       title,
       description,
@@ -87,6 +91,30 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
   const canonicalUrl = `${siteConfig.url}/properties/${typedProperty.slug}`;
   const jsonLd = generatePropertySchema(typedProperty, canonicalUrl);
 
+  // Fetch related listings in the same location area
+  const { data: relatedData } = await supabase
+    .from('properties')
+    .select('*')
+    .eq('publication_status', 'published')
+    .neq('id', typedProperty.id)
+    .ilike('area_location', `%${typedProperty.area_location.split(' ')[0]}%`)
+    .limit(3);
+
+  const relatedProperties: Property[] = relatedData || [];
+
+  const breadcrumbItems = [
+    { label: 'Properties', href: '/properties' },
+    { label: typedProperty.area_location, href: `/properties?location=${encodeURIComponent(typedProperty.area_location)}` },
+    { label: typedProperty.title },
+  ];
+
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'Home', url: siteConfig.url },
+    { name: 'Properties', url: `${siteConfig.url}/properties` },
+    { name: typedProperty.area_location, url: `${siteConfig.url}/properties?location=${encodeURIComponent(typedProperty.area_location)}` },
+    { name: typedProperty.title, url: canonicalUrl },
+  ]);
+
   const displayImages = typedProperty.images.length > 0 ? typedProperty.images : ['/HomaceLogo.png'];
 
   const whatsappMessage = `Hello HomaceBuild & Realators, I am inquiring regarding "${typedProperty.title}" (Ref: ${typedProperty.reference_code}). Please confirm availability.`;
@@ -101,6 +129,12 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+
+      <Breadcrumbs items={breadcrumbItems} />
 
       {/* Header Info */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-brand-slate-200">
@@ -299,6 +333,17 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
               </div>
             </dl>
           </div>
+
+          {/* Direct-Answer Informational Box (AEO) */}
+          <div className="bg-brand-azure-tint border border-brand-azure/20 rounded-2xl p-6 text-xs text-brand-slate-700 space-y-2">
+            <h4 className="font-bold text-brand-navy flex items-center gap-1.5 text-sm">
+              <Compass className="w-4 h-4 text-brand-azure" />
+              <span>Area Standard Note for This Property</span>
+            </h4>
+            <p className="leading-relaxed">
+              This property is recorded under the <strong>{typedProperty.marla_sqft_standard} sq ft per Marla</strong> standard. For residential plots in {typedProperty.area_location}, standard plot dimensions follow municipal and developer-approved town planning guidelines.
+            </p>
+          </div>
         </div>
 
         {/* Right Column: Inquire Form Card */}
@@ -310,6 +355,28 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
           />
         </div>
       </div>
+
+      {/* Related Properties Section */}
+      {relatedProperties.length > 0 && (
+        <div className="pt-10 border-t border-brand-slate-200 space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="text-xs font-bold text-brand-copper uppercase tracking-wider">
+                Related Inventory
+              </span>
+              <h2 className="text-xl font-bold text-brand-navy mt-0.5">
+                Similar Properties in {typedProperty.area_location}
+              </h2>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {relatedProperties.map((relProp) => (
+              <PropertyCard key={relProp.id} property={relProp} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

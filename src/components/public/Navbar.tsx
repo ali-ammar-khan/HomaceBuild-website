@@ -94,13 +94,13 @@ export default function Navbar() {
               Plots
             </Link>
             <Link
-              href="/properties?location=Bahria+Town"
+              href="/locations/bahria-town"
               className="hover:text-brand-azure transition-colors py-1"
             >
               Bahria Town
             </Link>
             <Link
-              href="/properties?location=DHA"
+              href="/locations/dha-islamabad"
               className="hover:text-brand-azure transition-colors py-1"
             >
               DHA
@@ -182,14 +182,14 @@ export default function Navbar() {
               Plots & Files
             </Link>
             <Link
-              href="/properties?location=Bahria+Town"
+              href="/locations/bahria-town"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
             >
               Bahria Town Properties
             </Link>
             <Link
-              href="/properties?location=DHA"
+              href="/locations/dha-islamabad"
               onClick={() => setMobileMenuOpen(false)}
               className="px-3 py-2 rounded-md hover:bg-brand-slate-50"
             >

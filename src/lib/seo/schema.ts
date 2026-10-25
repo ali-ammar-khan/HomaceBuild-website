@@ -3,7 +3,7 @@ import { siteConfig } from '@/config/site';
 
 /**
  * Validated Schema.org structured data generators.
- * Conforms strictly to Schema.org standards (LandPlot, SingleFamilyResidence, CommercialProperty, RealEstateAgent).
+ * Conforms strictly to Schema.org standards (LandPlot, SingleFamilyResidence, CommercialProperty, RealEstateAgent, BreadcrumbList, FAQPage).
  * Note: While this markup provides semantic entities for search engines and generative models,
  * it does not guarantee SERP rich-cards or rankings.
  */
@@ -41,6 +41,34 @@ export function generateOrganizationSchema() {
     },
     telephone: siteConfig.contact.phone !== 'To be provided' ? siteConfig.contact.phone : undefined,
     email: siteConfig.contact.email !== 'To be provided' ? siteConfig.contact.email : undefined,
+  };
+}
+
+export function generateBreadcrumbSchema(items: { name: string; url: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+}
+
+export function generateFAQSchema(faqs: { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
   };
 }
 

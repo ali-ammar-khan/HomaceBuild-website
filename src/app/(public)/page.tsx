@@ -84,10 +84,10 @@ export default async function HomePage() {
               Comprehensive coverage of residential plots (5 Marla, 10 Marla, 1 Kanal), commercial civic zones, and ready villas in Bahria Town Rawalpindi/Islamabad.
             </p>
             <Link
-              href="/properties?location=Bahria+Town"
+              href="/locations/bahria-town"
               className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-azure hover:text-brand-copper transition-colors"
             >
-              <span>Explore Bahria Town Listings</span>
+              <span>Explore Bahria Town Guide & Listings</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -104,10 +104,10 @@ export default async function HomePage() {
               Verified allocations, balloted files, and possession plots in DHA Phase 1, Phase 2, Phase 3, Phase 4, and DHA Valley.
             </p>
             <Link
-              href="/properties?location=DHA"
+              href="/locations/dha-islamabad"
               className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-brand-copper hover:text-brand-azure transition-colors"
             >
-              <span>Explore DHA Listings</span>
+              <span>Explore DHA Guide & Listings</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
