@@ -305,7 +305,7 @@ export default function NewPropertyPage() {
                   className="rounded border-slate-300 text-brand-navy focus:ring-brand-gold"
                 />
                 <span className="text-xs font-semibold text-slate-700">
-                  Mark as "Price on Call" (Leaves price confidential)
+                  Mark as &ldquo;Price on Call&rdquo; (Leaves price confidential)
                 </span>
               </label>
             </div>

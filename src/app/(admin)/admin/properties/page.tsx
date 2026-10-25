@@ -136,7 +136,7 @@ export default async function AdminPropertiesPage() {
               ) : (
                 <tr>
                   <td colSpan={7} className="py-10 text-center text-slate-400 text-xs">
-                    No properties in portfolio yet. Click "Add New Property" to publish your first verified listing.
+                    No properties in portfolio yet. Click &ldquo;Add New Property&rdquo; to publish your first verified listing.
                   </td>
                 </tr>
               )}

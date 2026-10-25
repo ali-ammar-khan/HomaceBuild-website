@@ -161,7 +161,7 @@ export default async function AdminDashboardOverview() {
                     </span>
                   </div>
                   <p className="text-slate-600 line-clamp-1 italic">
-                    "{inquiry.message}"
+                    &ldquo;{inquiry.message}&rdquo;
                   </p>
                   {inquiry.properties && (
                     <p className="text-slate-400 text-[11px]">
