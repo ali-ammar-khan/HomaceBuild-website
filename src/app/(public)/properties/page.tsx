@@ -1,12 +1,13 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { getPublishedProperties } from '@/lib/propertyService';
-import { Property } from '@/types/database';
 import PropertyCard from '@/components/public/PropertyCard';
 import SearchFilterBar from '@/components/public/SearchFilterBar';
 import Breadcrumbs from '@/components/public/Breadcrumbs';
 import { siteConfig } from '@/config/site';
 import { generateBreadcrumbSchema } from '@/lib/seo/schema';
+import { EmptyState } from '@/components/ui/EmptyState';
+import { Pagination } from '@/components/ui/Pagination';
 import { Building2 } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -26,11 +27,21 @@ interface PropertiesPageProps {
     location?: string;
     plot_status?: string;
     sort?: string;
+    page?: string;
   };
 }
 
+const ITEMS_PER_PAGE = 9;
+
 export default async function PropertiesPage({ searchParams }: PropertiesPageProps) {
   const listings = await getPublishedProperties(searchParams);
+
+  const currentPage = Math.max(1, parseInt(searchParams.page || '1', 10) || 1);
+  const totalItems = listings.length;
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedListings = listings.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: 'Home', url: siteConfig.url },
@@ -66,27 +77,38 @@ export default async function PropertiesPage({ searchParams }: PropertiesPagePro
       {/* Results Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-brand-slate-200">
         <p className="text-xs sm:text-sm text-brand-slate-600 font-medium">
-          Showing <span className="font-bold text-brand-navy">{listings.length}</span> verified listing{listings.length === 1 ? '' : 's'}
+          Showing <span className="font-bold text-brand-navy">{totalItems}</span> verified listing{totalItems === 1 ? '' : 's'}
+          {totalItems > ITEMS_PER_PAGE && (
+            <span className="text-brand-slate-400 ml-1">
+              (Page {currentPage} of {totalPages})
+            </span>
+          )}
         </p>
       </div>
 
       {/* Properties Grid */}
-      {listings.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {listings.map((property) => (
-            <PropertyCard key={property.id} property={property} />
-          ))}
+      {paginatedListings.length > 0 ? (
+        <div className="space-y-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {paginatedListings.map((property) => (
+              <PropertyCard key={property.id} property={property} />
+            ))}
+          </div>
+
+          {/* Accessible Pagination */}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+          />
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-brand-slate-200 p-12 text-center max-w-lg mx-auto">
-          <Building2 className="w-12 h-12 text-brand-slate-300 mx-auto mb-3" />
-          <h3 className="text-base font-semibold text-brand-slate-800">
-            No Listings Found Matching Criteria
-          </h3>
-          <p className="text-xs text-brand-slate-500 mt-1">
-            Try adjusting your location or category filters, or contact our advisory desk directly to source specific off-market opportunities.
-          </p>
-        </div>
+        <EmptyState
+          title="No Listings Found Matching Criteria"
+          description="Try adjusting your location or category filters, or contact our advisory desk directly to source specific off-market opportunities."
+          icon={Building2}
+          actionLabel="Clear All Filters"
+          actionHref="/properties"
+        />
       )}
     </div>
   );

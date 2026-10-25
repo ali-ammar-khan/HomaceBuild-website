@@ -1,8 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
-import Link from 'next/link';
 import { getPropertyBySlug, getPublishedProperties } from '@/lib/propertyService';
 import { Property } from '@/types/database';
 import { formatArea, formatPKR } from '@/config/measurements';
@@ -10,15 +8,15 @@ import { generatePropertySchema, generateBreadcrumbSchema } from '@/lib/seo/sche
 import { siteConfig } from '@/config/site';
 import Breadcrumbs from '@/components/public/Breadcrumbs';
 import PropertyCard from '@/components/public/PropertyCard';
+import PropertyGallery from '@/components/public/PropertyGallery';
 import InquiryForm from '@/components/public/InquiryForm';
+import { Badge } from '@/components/ui/Badge';
+import { WhatsAppButton } from '@/components/ui/WhatsAppButton';
+import { CallButton } from '@/components/ui/CallButton';
 import {
   MapPin,
   Bed,
   Bath,
-  MessageSquare,
-  ShieldCheck,
-  Building,
-  HelpCircle,
   Compass,
 } from 'lucide-react';
 
@@ -100,11 +98,6 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
 
   const displayImages = typedProperty.images.length > 0 ? typedProperty.images : ['/HomaceLogo.png'];
 
-  const whatsappMessage = `Hello HomaceBuild & Realators, I am inquiring regarding "${typedProperty.title}" (Ref: ${typedProperty.reference_code}). Please confirm availability.`;
-  const whatsappUrl = siteConfig.contact.whatsapp
-    ? `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`
-    : null;
-
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
       {/* Schema.org Structured Data */}
@@ -122,20 +115,23 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
       {/* Header Info */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-brand-slate-200">
         <div className="space-y-2">
-          <div className="flex flex-wrap items-center gap-2 text-xs">
-            <span className="bg-brand-navy text-white font-bold px-2.5 py-1 rounded uppercase tracking-wider">
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant={typedProperty.purpose === 'sale' ? 'sale' : 'rent'} size="md">
               For {typedProperty.purpose}
-            </span>
-            <span className="bg-brand-slate-100 text-brand-slate-700 font-semibold px-2.5 py-1 rounded uppercase">
+            </Badge>
+            <Badge variant="default" size="md">
               {typedProperty.category.replace('_', ' ')}
-            </span>
-            {typedProperty.plot_file_status !== 'not_applicable' && (
-              <span className="bg-emerald-600 text-white font-semibold px-2.5 py-1 rounded flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                {typedProperty.plot_file_status.replace('_', ' ').toUpperCase()}
-              </span>
+            </Badge>
+            {typedProperty.plot_file_status === 'possession' && (
+              <Badge variant="possession" size="md">Possession</Badge>
             )}
-            <span className="text-brand-slate-400 font-mono">
+            {typedProperty.plot_file_status === 'balloted' && (
+              <Badge variant="balloted" size="md">Balloted</Badge>
+            )}
+            {typedProperty.plot_file_status === 'file' && (
+              <Badge variant="file" size="md">File</Badge>
+            )}
+            <span className="text-brand-slate-400 font-mono text-xs ml-1">
               Ref: #{typedProperty.reference_code}
             </span>
           </div>
@@ -152,7 +148,7 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
           </p>
         </div>
 
-        {/* Pricing Box & Quick Action */}
+        {/* Pricing Box & Quick Actions */}
         <div className="flex flex-col sm:flex-row sm:items-center lg:flex-col lg:items-end gap-3">
           <div className="text-left lg:text-right">
             <span className="text-xs text-brand-slate-500 block uppercase tracking-wider font-semibold">
@@ -163,53 +159,26 @@ export default async function PropertyDetailPage({ params }: PropertyPageProps) 
             </span>
           </div>
 
-          {whatsappUrl && (
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-colors shadow-sm"
+          <div className="flex items-center gap-2">
+            <WhatsAppButton
+              propertyTitle={typedProperty.title}
+              referenceCode={typedProperty.reference_code}
+              size="md"
             >
-              <MessageSquare className="w-4 h-4" />
-              <span>Inquire via WhatsApp</span>
-            </a>
-          )}
+              Inquire via WhatsApp
+            </WhatsAppButton>
+            <CallButton size="md">
+              Call Agent
+            </CallButton>
+          </div>
         </div>
       </div>
 
-      {/* Media Gallery / Main Image */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="md:col-span-2 relative h-80 sm:h-96 md:h-[480px] rounded-2xl overflow-hidden bg-brand-slate-900 border border-brand-slate-200">
-          <Image
-            src={displayImages[0]}
-            alt={typedProperty.title}
-            fill
-            priority
-            className="object-cover"
-          />
-        </div>
-
-        {/* Side Thumbnails or Advisory Box */}
-        <div className="flex flex-col gap-4">
-          {displayImages.slice(1, 3).map((img, index) => (
-            <div key={index} className="relative h-44 sm:h-56 md:h-[232px] rounded-2xl overflow-hidden bg-brand-slate-900 border border-brand-slate-200">
-              <Image src={img} alt={`${typedProperty.title} photo ${index + 2}`} fill className="object-cover" />
-            </div>
-          ))}
-
-          {displayImages.length <= 1 && (
-            <div className="h-full bg-brand-slate-50 border border-brand-slate-200 rounded-2xl p-6 flex flex-col justify-center text-center">
-              <ShieldCheck className="w-10 h-10 text-brand-copper mx-auto mb-2" />
-              <h4 className="text-sm font-bold text-brand-navy">
-                Verified Listing Standards
-              </h4>
-              <p className="text-xs text-brand-slate-500 mt-1">
-                All property attributes are verified against official developer records (Bahria Town & DHA).
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
+      {/* Interactive Media Gallery with Fullscreen Lightbox */}
+      <PropertyGallery
+        images={displayImages}
+        title={typedProperty.title}
+      />
 
       {/* Main Specifications & Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">

@@ -4,7 +4,8 @@ import Image from 'next/image';
 import { Property } from '@/types/database';
 import { formatArea, formatPKR } from '@/config/measurements';
 import { siteConfig } from '@/config/site';
-import { MapPin, Bed, Bath, ArrowUpRight, MessageSquare, ShieldCheck } from 'lucide-react';
+import { Badge } from '@/components/ui/Badge';
+import { MapPin, Bed, Bath, ArrowUpRight, MessageSquare } from 'lucide-react';
 
 interface PropertyCardProps {
   property: Property;
@@ -46,14 +47,22 @@ export default function PropertyCard({ property }: PropertyCardProps) {
 
         {/* Top Badges */}
         <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 z-10">
-          <span className="bg-brand-navy/95 backdrop-blur-sm text-white text-[11px] font-bold px-2.5 py-1 rounded shadow-sm uppercase tracking-wider border border-white/10">
+          <Badge variant={property.purpose === 'sale' ? 'sale' : 'rent'} size="sm">
             For {property.purpose}
-          </span>
+          </Badge>
           {statusLabel && (
-            <span className="bg-emerald-600/95 backdrop-blur-sm text-white text-[11px] font-medium px-2.5 py-1 rounded shadow-sm flex items-center gap-1">
-              <ShieldCheck className="w-3 h-3" />
+            <Badge
+              variant={
+                property.plot_file_status === 'possession'
+                  ? 'possession'
+                  : property.plot_file_status === 'balloted'
+                  ? 'balloted'
+                  : 'file'
+              }
+              size="sm"
+            >
               {statusLabel}
-            </span>
+            </Badge>
           )}
         </div>
 

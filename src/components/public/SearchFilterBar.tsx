@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, MapPin, Home, SlidersHorizontal } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
 import { siteConfig } from '@/config/site';
 
 interface SearchFilterBarProps {
@@ -146,13 +147,15 @@ export default function SearchFilterBar({
 
         {/* Submit Search Button */}
         <div className="pt-5 md:pt-0">
-          <button
+          <Button
             type="submit"
-            className="w-full h-11 bg-brand-navy hover:bg-brand-navy-light text-white font-semibold text-sm rounded-lg transition-colors flex items-center justify-center gap-2 shadow-sm border border-brand-navy-light"
+            variant="primary"
+            size="md"
+            className="w-full h-11"
+            leftIcon={<Search className="w-4 h-4 text-brand-copper" />}
           >
-            <Search className="w-4 h-4 text-brand-copper" />
-            <span>Search Properties</span>
-          </button>
+            Search Properties
+          </Button>
         </div>
       </form>
     </div>
