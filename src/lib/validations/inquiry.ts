@@ -1,18 +1,25 @@
 import { z } from 'zod';
 
 export const InquiryFormSchema = z.object({
-  property_id: z.string().uuid().optional().nullable(),
+  property_id: z.string().uuid('Invalid property reference').optional().nullable().or(z.literal('')),
+  property_title: z.string().optional().nullable(),
+  reference_code: z.string().optional().nullable(),
   customer_name: z
     .string()
     .trim()
-    .min(2, 'Please enter your full name')
-    .max(80, 'Name is too long'),
+    .min(2, 'Please enter your full name (minimum 2 characters)')
+    .max(80, 'Name cannot exceed 80 characters'),
   phone: z
     .string()
     .trim()
-    .regex(
-      /^(\+92|0)?3[0-9]{9}$/,
-      'Please enter a valid Pakistani mobile number (e.g., 03001234567 or +923001234567)'
+    .transform((val) => val.replace(/[\s\-\(\)]/g, ''))
+    .pipe(
+      z
+        .string()
+        .regex(
+          /^(\+92|0)?3[0-9]{9}$/,
+          'Please enter a valid Pakistani mobile number (e.g., 0300 1234567 or +92 300 1234567)'
+        )
     ),
   email: z
     .string()

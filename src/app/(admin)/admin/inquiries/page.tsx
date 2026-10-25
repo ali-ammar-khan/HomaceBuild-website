@@ -1,32 +1,42 @@
 import React from 'react';
 import { createClient } from '@/lib/supabase/server';
-import { Inquiry } from '@/types/database';
 import { revalidatePath } from 'next/cache';
 import {
   Inbox,
   MessageSquare,
   Phone,
   Mail,
-  Calendar,
   Building,
-  CheckCircle,
 } from 'lucide-react';
 
 export default async function AdminInquiriesPage() {
-  const supabase = createClient();
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const isSupabaseConfigured =
+    supabaseUrl &&
+    !supabaseUrl.includes('placeholder') &&
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  const { data: inquiries } = await supabase
-    .from('inquiries')
-    .select('*, properties(title, reference_code, slug)')
-    .order('created_at', { ascending: false });
+  let leadList: any[] = [];
 
-  const leadList: any[] = inquiries || [];
+  if (isSupabaseConfigured) {
+    try {
+      const supabase = createClient();
+      const { data: inquiries } = await supabase
+        .from('inquiries')
+        .select('*, properties(title, reference_code, slug)')
+        .order('created_at', { ascending: false });
+
+      leadList = inquiries || [];
+    } catch (err) {
+      console.error('Error fetching admin inquiries:', err);
+    }
+  }
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-slate-900">
-          Client Leads & Property Inquiries
+          Client Leads &amp; Property Inquiries
         </h1>
         <p className="text-xs text-slate-500 mt-1">
           Direct inquiries captured from website visitors. Role-based access enforced.
@@ -57,15 +67,17 @@ export default async function AdminInquiriesPage() {
                           {lead.email}
                         </span>
                       )}
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-semibold uppercase ${
-                        lead.status === 'new'
-                          ? 'bg-amber-100 text-amber-800'
-                          : lead.status === 'contacted'
-                          ? 'bg-blue-100 text-blue-800'
-                          : lead.status === 'qualified'
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : 'bg-slate-100 text-slate-600'
-                      }`}>
+                      <span
+                        className={`px-2 py-0.5 rounded text-[10px] font-semibold uppercase ${
+                          lead.status === 'new'
+                            ? 'bg-amber-100 text-amber-800'
+                            : lead.status === 'contacted'
+                            ? 'bg-blue-100 text-blue-800'
+                            : lead.status === 'qualified'
+                            ? 'bg-emerald-100 text-emerald-800'
+                            : 'bg-slate-100 text-slate-600'
+                        }`}
+                      >
                         {lead.status}
                       </span>
                     </div>
@@ -119,7 +131,7 @@ export default async function AdminInquiriesPage() {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between text-[11px] text-slate-400 gap-2">
                     {lead.properties ? (
                       <div className="flex items-center gap-1.5">
-                        <Building className="w-3.5 h-3.5 text-brand-gold" />
+                        <Building className="w-3.5 h-3.5 text-brand-copper" />
                         <span>Associated Property:</span>
                         <span className="font-semibold text-slate-700">
                           {lead.properties.title} (#{lead.properties.reference_code})
