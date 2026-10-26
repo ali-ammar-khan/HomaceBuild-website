@@ -47,16 +47,16 @@ export default function Navbar() {
 
   const getNavLinkClasses = (isActive: boolean) =>
     cn(
-      'relative px-2.5 xl:px-3.5 py-1.5 xl:py-2 rounded-full text-xs xl:text-sm font-semibold tracking-wide transition-all duration-200 group inline-flex items-center gap-1.5 select-none whitespace-nowrap shrink-0',
+      'relative px-2 lg:px-2.5 xl:px-3 py-1 lg:py-1.5 xl:py-2 rounded-full text-[11px] lg:text-xs xl:text-sm font-semibold tracking-wide transition-all duration-200 group inline-flex items-center gap-1 select-none whitespace-nowrap shrink-0',
       isActive
         ? 'bg-white text-brand-navy font-bold shadow-[0_2px_8px_rgba(10,30,66,0.08)] border border-brand-slate-200/90'
         : 'text-brand-slate-600 hover:text-brand-navy hover:bg-white/80'
     );
 
   return (
-    <header className="sticky top-0 z-40 bg-white/96 backdrop-blur-xl border-b border-brand-slate-200/80 shadow-[0_4px_24px_-4px_rgba(10,30,66,0.07)] transition-all w-full max-w-full overflow-x-clip">
+    <header className="sticky top-0 z-40 bg-white/96 backdrop-blur-xl border-b border-brand-slate-200/80 shadow-[0_4px_24px_-4px_rgba(10,30,66,0.07)] transition-all w-full max-w-full">
       {/* Top Advisory Bar - Deep Navy with Subtle Status Accents */}
-      <div className="bg-gradient-to-r from-brand-navy-dark via-brand-navy to-brand-navy-dark text-brand-slate-300 text-xs py-2 px-4 border-b border-brand-navy-light/40">
+      <div className="bg-gradient-to-r from-brand-navy-dark via-brand-navy to-brand-navy-dark text-brand-slate-300 text-xs py-2 px-3 sm:px-4 border-b border-brand-navy-light/40">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-navy-light/50 border border-brand-cyan/20 text-brand-cyan text-[11px] font-semibold tracking-wide">
@@ -102,29 +102,29 @@ export default function Navbar() {
       </div>
 
       {/* Main Navigation Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-22 sm:h-26 lg:h-26 gap-3 xl:gap-6 flex-nowrap">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-18 sm:h-22 lg:h-24 gap-2 lg:gap-3 xl:gap-5 flex-nowrap w-full">
           {/* Company Brand Logo - Large, Razor-Sharp, Prominent */}
           <Link
             href="/"
             prefetch={true}
-            className="flex items-center group py-2 active:scale-[0.98] transition-transform shrink-0"
+            className="flex items-center group py-1.5 active:scale-[0.98] transition-transform shrink-0"
             title="HomaceBuild and Realators"
           >
-            <div className="relative h-18 w-56 sm:h-22 sm:w-64 md:h-24 md:w-72 lg:h-26 lg:w-96 max-w-[210px] sm:max-w-[280px] lg:max-w-[280px] xl:max-w-[370px] 2xl:max-w-none flex items-center shrink-0">
+            <div className="relative h-14 w-44 sm:h-20 sm:w-56 md:h-22 md:w-64 lg:h-24 lg:w-96 max-w-[135px] sm:max-w-[200px] md:max-w-[230px] lg:max-w-[200px] xl:max-w-[260px] 2xl:max-w-[340px] flex items-center shrink-0">
               <Image
                 src="/HomaceLogo.png"
                 alt="HomaceBuild and Realators - We Engineer Your Dreams"
                 fill
                 priority
                 className="object-contain object-left transition-transform duration-200 group-hover:scale-[1.02]"
-                sizes="(max-width: 640px) 250px, (max-width: 1280px) 340px, 400px"
+                sizes="(max-width: 640px) 200px, (max-width: 1280px) 280px, 360px"
               />
             </div>
           </Link>
 
           {/* Desktop Navigation Links - Segmented Pill Bar (Single Clean Line) */}
-          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 p-1.5 bg-brand-slate-100/80 backdrop-blur-md rounded-full border border-brand-slate-200/90 shadow-[inset_0_1px_3px_rgba(10,30,66,0.04)] whitespace-nowrap shrink-0">
+          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 p-1 xl:p-1.5 bg-brand-slate-100/80 backdrop-blur-md rounded-full border border-brand-slate-200/90 shadow-[inset_0_1px_3px_rgba(10,30,66,0.04)] whitespace-nowrap shrink">
             {/* 1. Home */}
             <Link
               href="/"
@@ -346,18 +346,18 @@ export default function Navbar() {
           </nav>
 
           {/* Right Header Action Group: Consultation CTA & Mobile Menu */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             {/* Consultation Action - Rich Copper Gradient CTA - Visible Across All Viewports */}
             <Link
               href="/contact"
               prefetch={true}
-              className="inline-flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-brand-copper via-[#E27632] to-brand-copper-hover text-white px-3 sm:px-4 xl:px-5 py-2 sm:py-2.5 rounded-full text-xs xl:text-sm font-bold tracking-wide transition-all duration-200 shadow-[0_4px_16px_rgba(217,107,39,0.32)] hover:shadow-[0_8px_24px_rgba(217,107,39,0.46)] hover:-translate-y-0.5 active:translate-y-0 active:scale-95 border border-amber-600/30 whitespace-nowrap shrink-0 group"
+              className="inline-flex items-center gap-1 sm:gap-1.5 bg-gradient-to-r from-brand-copper via-[#E27632] to-brand-copper-hover text-white px-2.5 sm:px-3.5 xl:px-4 2xl:px-5 py-1.5 sm:py-2 xl:py-2.5 rounded-full text-[11px] sm:text-xs xl:text-sm font-bold tracking-wide transition-all duration-200 shadow-[0_4px_16px_rgba(217,107,39,0.32)] hover:shadow-[0_8px_24px_rgba(217,107,39,0.46)] hover:-translate-y-0.5 active:translate-y-0 active:scale-95 border border-amber-600/30 whitespace-nowrap shrink-0 group"
               title="Schedule a Consultation with Homace Specialists"
             >
               <Calendar className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-white shrink-0 group-hover:rotate-6 transition-transform" />
               <span className="whitespace-nowrap">
-                <span className="hidden sm:inline">Consultation</span>
-                <span className="sm:hidden">Consult</span>
+                <span className="hidden min-[380px]:inline">Consultation</span>
+                <span className="min-[380px]:hidden">Consult</span>
               </span>
             </Link>
 
@@ -366,7 +366,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 sm:p-2.5 rounded-2xl bg-brand-slate-100 hover:bg-brand-slate-200 text-brand-navy border border-brand-slate-200/80 active:scale-95 transition-all shadow-2xs"
+                className="p-1.5 sm:p-2.5 rounded-2xl bg-brand-slate-100 hover:bg-brand-slate-200 text-brand-navy border border-brand-slate-200/80 active:scale-95 transition-all shadow-2xs"
                 aria-label="Toggle navigation menu"
               >
                 {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
