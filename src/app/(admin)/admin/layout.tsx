@@ -13,6 +13,8 @@ import {
   ExternalLink,
 } from 'lucide-react';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Staff Administration Portal | HomaceBuild and Realators',
   robots: {

@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+import { createPublicClient } from '@/lib/supabase/server';
 import { Property } from '@/types/database';
 import { initialSampleProperties } from '@/data/initialProperties';
 import { SearchFilterInput, normalizeFilterAreaToMarla } from '@/lib/validations/searchFilters';
@@ -56,7 +56,7 @@ export async function searchPublishedProperties(
 
   if (isSupabaseConfigured) {
     try {
-      const supabase = createClient();
+      const supabase = createPublicClient();
       let query = supabase
         .from('properties')
         .select('*', { count: 'exact' })
@@ -256,7 +256,7 @@ export async function getPropertyBySlug(slug: string): Promise<Property | null> 
 
   if (isSupabaseConfigured) {
     try {
-      const supabase = createClient();
+      const supabase = createPublicClient();
       const timeoutPromise = new Promise<{ data: null; error: any }>((resolve) =>
         setTimeout(() => resolve({ data: null, error: 'timeout' }), 2000)
       );
