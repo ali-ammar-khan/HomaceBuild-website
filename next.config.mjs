@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // output: "standalone" (Maintained for Docker builds; omitted on Vercel to enable native serverless edge routing)
-  ...(process.env.VERCEL ? {} : { output: "standalone" }),
+  // output: "standalone" (Strictly active only in containerized Docker builds; omitted on Vercel for native edge routing)
+  ...(process.env.DOCKER_BUILD === "1" ? { output: "standalone" } : {}),
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],

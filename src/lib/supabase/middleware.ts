@@ -9,11 +9,7 @@ export async function updateSession(request: NextRequest) {
   const isAuthRoute = pathname.startsWith('/admin') || pathname === '/login';
 
   if (!isAuthRoute) {
-    return NextResponse.next({
-      request: {
-        headers: request.headers,
-      },
-    });
+    return NextResponse.next();
   }
 
   let response = NextResponse.next({
