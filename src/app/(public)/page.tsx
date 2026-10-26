@@ -150,7 +150,44 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 3. RESIDENTIAL PROPERTY CATEGORIES */}
+      {/* 3. MARKET CATALOG / FEATURED LISTINGS */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8">
+          <div>
+            <span className="text-xs font-bold text-brand-copper uppercase tracking-wider">
+              Market Catalog
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-brand-navy mt-1">
+              Featured Property Opportunities
+            </h2>
+          </div>
+          <Link
+            href="/properties"
+            className="mt-4 sm:mt-0 inline-flex items-center gap-2 text-sm font-semibold text-brand-azure hover:text-brand-copper transition-colors"
+          >
+            <span>View All Listings</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        {publishedListings.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {publishedListings.map((property) => (
+              <PropertyCard key={property.id} property={property} />
+            ))}
+          </div>
+        ) : (
+          <EmptyState
+            title="Listings Are Being Authenticated"
+            description="We only publish verified listings with confirmed developer records. Please submit your custom requirement or contact our advisory desk directly for off-market inventory."
+            icon={Building2}
+            actionLabel="Submit Requirement"
+            actionHref="/contact"
+          />
+        )}
+      </section>
+
+      {/* 4. RESIDENTIAL PROPERTY CATEGORIES */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-brand-slate-200">
           <div>
@@ -265,7 +302,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* 4. COMMERCIAL PROPERTY CATEGORIES */}
+      {/* 5. COMMERCIAL PROPERTY CATEGORIES */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 pb-4 border-b border-brand-slate-200">
           <div>
@@ -370,43 +407,6 @@ export default async function HomePage() {
             </Link>
           </div>
         </div>
-      </section>
-
-      {/* 5. FEATURED / RECENTLY PUBLISHED LISTINGS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8">
-          <div>
-            <span className="text-xs font-bold text-brand-copper uppercase tracking-wider">
-              Market Catalog
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-bold text-brand-navy mt-1">
-              Featured Property Opportunities
-            </h2>
-          </div>
-          <Link
-            href="/properties"
-            className="mt-4 sm:mt-0 inline-flex items-center gap-2 text-sm font-semibold text-brand-azure hover:text-brand-copper transition-colors"
-          >
-            <span>View All Listings</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-
-        {publishedListings.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {publishedListings.map((property) => (
-              <PropertyCard key={property.id} property={property} />
-            ))}
-          </div>
-        ) : (
-          <EmptyState
-            title="Listings Are Being Authenticated"
-            description="We only publish verified listings with confirmed developer records. Please submit your custom requirement or contact our advisory desk directly for off-market inventory."
-            icon={Building2}
-            actionLabel="Submit Requirement"
-            actionHref="/contact"
-          />
-        )}
       </section>
 
       {/* 6. COVERAGE AREAS (ISLAMABAD, RAWALPINDI, BAHRIA TOWN, DHA) */}
