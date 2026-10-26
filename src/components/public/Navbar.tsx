@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { siteConfig } from '@/config/site';
 import { cn } from '@/lib/utils';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import {
   Menu,
   X,
@@ -68,7 +69,7 @@ export default function Navbar() {
             </span>
           </div>
 
-          <div className="flex items-center gap-4 text-xs">
+          <div className="flex items-center gap-2.5 sm:gap-4 text-xs flex-wrap justify-end">
             {siteConfig.contact.phone !== 'To be provided' && (
               <a
                 href={`tel:${siteConfig.contact.phone.replace(/\s+/g, '')}`}
@@ -80,7 +81,7 @@ export default function Navbar() {
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                 </span>
                 <Phone className="w-3 h-3 text-brand-copper group-hover:text-brand-copper-hover transition-colors" />
-                <span className="font-semibold text-brand-slate-200 group-hover:text-white tracking-wide">
+                <span className="font-semibold text-brand-slate-200 group-hover:text-white tracking-wide text-[11px] sm:text-xs">
                   {siteConfig.contact.phone}
                 </span>
               </a>
@@ -88,11 +89,14 @@ export default function Navbar() {
             <Link
               href="/login"
               prefetch={true}
-              className="text-brand-slate-400 hover:text-white transition-colors border-l border-brand-slate-700/80 pl-3 active:scale-95 whitespace-nowrap flex items-center gap-1 group"
+              className="text-brand-slate-400 hover:text-white transition-colors border-l border-brand-slate-700/80 pl-2.5 sm:pl-3 active:scale-95 whitespace-nowrap flex items-center gap-1 group"
             >
               <Lock className="w-3 h-3 text-brand-slate-500 group-hover:text-brand-cyan transition-colors" />
               <span className="font-medium text-[11px]">Staff Portal</span>
             </Link>
+            <div className="border-l border-brand-slate-700/80 pl-2.5 sm:pl-3 flex items-center shrink-0">
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </div>
@@ -341,28 +345,33 @@ export default function Navbar() {
             </Link>
           </nav>
 
-          {/* Desktop Consultation Action - Rich Copper Gradient CTA */}
-          <div className="hidden xl:flex items-center shrink-0">
+          {/* Right Header Action Group: Consultation CTA & Mobile Menu */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {/* Consultation Action - Rich Copper Gradient CTA - Visible Across All Viewports */}
             <Link
               href="/contact"
               prefetch={true}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-brand-copper via-[#E27632] to-brand-copper-hover text-white px-5 py-2.5 rounded-full text-xs xl:text-sm font-bold tracking-wide transition-all duration-200 shadow-[0_4px_16px_rgba(217,107,39,0.32)] hover:shadow-[0_8px_24px_rgba(217,107,39,0.46)] hover:-translate-y-0.5 active:translate-y-0 active:scale-95 border border-amber-600/30 whitespace-nowrap shrink-0 group"
+              className="inline-flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-brand-copper via-[#E27632] to-brand-copper-hover text-white px-3 sm:px-4 xl:px-5 py-2 sm:py-2.5 rounded-full text-xs xl:text-sm font-bold tracking-wide transition-all duration-200 shadow-[0_4px_16px_rgba(217,107,39,0.32)] hover:shadow-[0_8px_24px_rgba(217,107,39,0.46)] hover:-translate-y-0.5 active:translate-y-0 active:scale-95 border border-amber-600/30 whitespace-nowrap shrink-0 group"
+              title="Schedule a Consultation with Homace Specialists"
             >
               <Calendar className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-white shrink-0 group-hover:rotate-6 transition-transform" />
-              <span className="whitespace-nowrap">Consultation</span>
+              <span className="whitespace-nowrap">
+                <span className="hidden sm:inline">Consultation</span>
+                <span className="sm:hidden">Consult</span>
+              </span>
             </Link>
-          </div>
 
-          {/* Mobile Menu Hamburger Button */}
-          <div className="flex lg:hidden shrink-0">
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2.5 rounded-2xl bg-brand-slate-100 hover:bg-brand-slate-200 text-brand-navy border border-brand-slate-200/80 active:scale-95 transition-all shadow-2xs"
-              aria-label="Toggle navigation menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
+            {/* Mobile Menu Hamburger Button */}
+            <div className="flex lg:hidden shrink-0">
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 sm:p-2.5 rounded-2xl bg-brand-slate-100 hover:bg-brand-slate-200 text-brand-navy border border-brand-slate-200/80 active:scale-95 transition-all shadow-2xs"
+                aria-label="Toggle navigation menu"
+              >
+                {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -500,6 +509,10 @@ export default function Navbar() {
               <Lock className="w-4 h-4 text-brand-azure shrink-0" />
               <span>Staff Dashboard Sign In</span>
             </Link>
+            <div className="pt-2 pb-1 border-t border-brand-slate-100 flex items-center justify-between px-3">
+              <span className="text-xs font-semibold text-brand-slate-600">Theme Appearance</span>
+              <ThemeToggle />
+            </div>
           </div>
 
           <div className="pt-3 border-t border-brand-slate-100 flex flex-col gap-2">

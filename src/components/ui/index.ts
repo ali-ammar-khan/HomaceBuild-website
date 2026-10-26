@@ -12,3 +12,4 @@ export * from './CallButton';
 export * from './Modal';
 export * from './Notification';
 export * from './SafeImage';
+export * from './ThemeToggle';
