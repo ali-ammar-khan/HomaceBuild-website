@@ -20,6 +20,14 @@ export const siteConfig = {
     country: "Pakistan",
   },
 
+  // Official Social Media & Channel Links
+  social: {
+    whatsapp: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "923006100619",
+    facebook: process.env.NEXT_PUBLIC_FACEBOOK_URL || "https://facebook.com/homacebuild",
+    instagram: process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://instagram.com/homacebuild",
+    tiktok: process.env.NEXT_PUBLIC_TIKTOK_URL || "https://www.tiktok.com/@homacebuild",
+  },
+
   // Documented property categories
   categories: [
     { value: "residential_plot", label: "Residential Plot", group: "Residential" },
