@@ -11,10 +11,12 @@ export default function PublicLayout({
 }) {
   return (
     <PropertyProvider>
-      <Navbar />
-      <main className="flex-1">{children}</main>
-      <Footer />
-      <FloatingWhatsAppButton />
+      <div className="flex min-h-screen flex-col w-full max-w-full overflow-x-hidden">
+        <Navbar />
+        <main className="flex-1 w-full max-w-full overflow-x-hidden">{children}</main>
+        <Footer />
+        <FloatingWhatsAppButton />
+      </div>
     </PropertyProvider>
   );
 }

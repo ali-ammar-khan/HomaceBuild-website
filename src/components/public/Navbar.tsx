@@ -53,7 +53,7 @@ export default function Navbar() {
     );
 
   return (
-    <header className="sticky top-0 z-40 bg-white/96 backdrop-blur-xl border-b border-brand-slate-200/80 shadow-[0_4px_24px_-4px_rgba(10,30,66,0.07)] transition-all">
+    <header className="sticky top-0 z-40 bg-white/96 backdrop-blur-xl border-b border-brand-slate-200/80 shadow-[0_4px_24px_-4px_rgba(10,30,66,0.07)] transition-all w-full max-w-full overflow-x-clip">
       {/* Top Advisory Bar - Deep Navy with Subtle Status Accents */}
       <div className="bg-gradient-to-r from-brand-navy-dark via-brand-navy to-brand-navy-dark text-brand-slate-300 text-xs py-2 px-4 border-b border-brand-navy-light/40">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
@@ -107,7 +107,7 @@ export default function Navbar() {
             className="flex items-center group py-2 active:scale-[0.98] transition-transform shrink-0"
             title="HomaceBuild and Realators"
           >
-            <div className="relative h-20 w-56 sm:h-24 sm:w-72 md:h-26 md:w-80 lg:h-26 lg:w-96 max-w-[250px] sm:max-w-[300px] md:max-w-[340px] lg:max-w-[300px] xl:max-w-[370px] 2xl:max-w-none flex items-center shrink-0">
+            <div className="relative h-18 w-56 sm:h-22 sm:w-64 md:h-24 md:w-72 lg:h-26 lg:w-96 max-w-[210px] sm:max-w-[280px] lg:max-w-[280px] xl:max-w-[370px] 2xl:max-w-none flex items-center shrink-0">
               <Image
                 src="/HomaceLogo.png"
                 alt="HomaceBuild and Realators - We Engineer Your Dreams"
@@ -342,7 +342,7 @@ export default function Navbar() {
           </nav>
 
           {/* Desktop Consultation Action - Rich Copper Gradient CTA */}
-          <div className="hidden sm:flex items-center shrink-0">
+          <div className="hidden xl:flex items-center shrink-0">
             <Link
               href="/contact"
               prefetch={true}

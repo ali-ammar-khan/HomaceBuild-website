@@ -10,7 +10,15 @@
     --brand-cyan: #009BE5;
   }
 
+  html {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
   body {
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
     @apply bg-brand-slate-50 text-slate-900 antialiased selection:bg-brand-azure-tint selection:text-brand-navy;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
