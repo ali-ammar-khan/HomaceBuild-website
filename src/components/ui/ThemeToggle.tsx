@@ -17,12 +17,9 @@ export function ThemeToggle({ className, variant = 'segmented' }: ThemeTogglePro
 
   useEffect(() => {
     setMounted(true);
-    // Check saved preference or system default
+    // Check saved preference; default to Daylight mode ('light')
     const savedTheme = localStorage.getItem('homace_theme') as ThemeMode | null;
-    if (savedTheme === 'dark' || savedTheme === 'light') {
-      setTheme(savedTheme);
-      applyTheme(savedTheme);
-    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    if (savedTheme === 'dark') {
       setTheme('dark');
       applyTheme('dark');
     } else {

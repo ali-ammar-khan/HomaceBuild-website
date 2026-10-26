@@ -55,25 +55,27 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 bg-white/96 backdrop-blur-xl border-b border-brand-slate-200/80 shadow-[0_4px_24px_-4px_rgba(10,30,66,0.07)] transition-all w-full max-w-full">
-      {/* Top Advisory Bar - Deep Navy with Subtle Status Accents */}
-      <div className="bg-gradient-to-r from-brand-navy-dark via-brand-navy to-brand-navy-dark text-brand-slate-300 text-xs py-2 px-3 sm:px-4 border-b border-brand-navy-light/40">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
-          <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-navy-light/50 border border-brand-cyan/20 text-brand-cyan text-[11px] font-semibold tracking-wide">
-              <ShieldCheck className="w-3.5 h-3.5 text-brand-cyan" />
+      {/* Top Advisory Bar - Mobile Friendly & Executive Desktop Layout */}
+      <div className="bg-gradient-to-r from-brand-navy-dark via-brand-navy to-brand-navy-dark text-brand-slate-300 text-xs py-1.5 sm:py-2 px-3 sm:px-4 border-b border-brand-navy-light/40">
+        <div className="max-w-7xl mx-auto flex flex-row justify-between items-center gap-2">
+          {/* Left: Verified Advisory Badge + Society Specialists */}
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 rounded-full bg-brand-navy-light/50 border border-brand-cyan/20 text-brand-cyan text-[10px] sm:text-[11px] font-semibold tracking-wide shrink-0">
+              <ShieldCheck className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-brand-cyan" />
               Verified Advisory
             </span>
             <span className="hidden md:inline text-brand-slate-600">•</span>
-            <span className="hidden md:inline text-[11px] uppercase tracking-wider text-brand-slate-300 font-medium">
+            <span className="hidden md:inline text-[11px] uppercase tracking-wider text-brand-slate-300 font-medium truncate">
               Bahria Town & DHA Islamabad Specialists
             </span>
           </div>
 
-          <div className="flex items-center gap-2.5 sm:gap-4 text-xs flex-wrap justify-end">
+          {/* Right: Phone, Staff Portal & Theme Toggle */}
+          <div className="flex items-center gap-2 sm:gap-3.5 text-xs shrink-0">
             {siteConfig.contact.phone !== 'To be provided' && (
               <a
                 href={`tel:${siteConfig.contact.phone.replace(/\s+/g, '')}`}
-                className="hover:text-white transition-colors flex items-center gap-1.5 whitespace-nowrap group"
+                className="hover:text-white transition-colors flex items-center gap-1 sm:gap-1.5 whitespace-nowrap group"
                 title={`Direct Telephone: ${siteConfig.contact.phone}`}
               >
                 <span className="relative flex h-2 w-2">
@@ -89,36 +91,41 @@ export default function Navbar() {
             <Link
               href="/login"
               prefetch={true}
-              className="text-brand-slate-400 hover:text-white transition-colors border-l border-brand-slate-700/80 pl-2.5 sm:pl-3 active:scale-95 whitespace-nowrap flex items-center gap-1 group"
+              className="text-brand-slate-400 hover:text-white transition-colors border-l border-brand-slate-700/80 pl-2 sm:pl-2.5 active:scale-95 whitespace-nowrap hidden min-[360px]:flex items-center gap-1 group"
             >
               <Lock className="w-3 h-3 text-brand-slate-500 group-hover:text-brand-cyan transition-colors" />
-              <span className="font-medium text-[11px]">Staff Portal</span>
+              <span className="font-medium text-[11px]">Staff</span>
             </Link>
-            <div className="border-l border-brand-slate-700/80 pl-2.5 sm:pl-3 flex items-center shrink-0">
-              <ThemeToggle />
+            <div className="border-l border-brand-slate-700/80 pl-2 sm:pl-2.5 flex items-center shrink-0">
+              <div className="hidden sm:block">
+                <ThemeToggle variant="segmented" />
+              </div>
+              <div className="sm:hidden">
+                <ThemeToggle variant="compact" />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Navigation Bar */}
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-18 sm:h-22 lg:h-24 gap-2 lg:gap-3 xl:gap-5 flex-nowrap w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20 sm:h-22 lg:h-24 gap-3 xl:gap-5 flex-nowrap w-full">
           {/* Company Brand Logo - Large, Razor-Sharp, Prominent */}
           <Link
             href="/"
             prefetch={true}
-            className="flex items-center group py-1.5 active:scale-[0.98] transition-transform shrink-0"
+            className="flex items-center group py-2 active:scale-[0.98] transition-transform shrink-0"
             title="HomaceBuild and Realators"
           >
-            <div className="relative h-14 w-44 sm:h-20 sm:w-56 md:h-22 md:w-64 lg:h-24 lg:w-96 max-w-[135px] sm:max-w-[200px] md:max-w-[230px] lg:max-w-[200px] xl:max-w-[260px] 2xl:max-w-[340px] flex items-center shrink-0">
+            <div className="relative h-18 w-56 sm:h-22 sm:w-64 md:h-24 md:w-72 lg:h-26 lg:w-96 max-w-[210px] sm:max-w-[260px] md:max-w-[300px] lg:max-w-[220px] xl:max-w-[280px] 2xl:max-w-none flex items-center shrink-0 header-logo-container">
               <Image
                 src="/HomaceLogo.png"
                 alt="HomaceBuild and Realators - We Engineer Your Dreams"
                 fill
                 priority
                 className="object-contain object-left transition-transform duration-200 group-hover:scale-[1.02]"
-                sizes="(max-width: 640px) 200px, (max-width: 1280px) 280px, 360px"
+                sizes="(max-width: 640px) 250px, (max-width: 1280px) 340px, 400px"
               />
             </div>
           </Link>
@@ -345,33 +352,29 @@ export default function Navbar() {
             </Link>
           </nav>
 
-          {/* Right Header Action Group: Consultation CTA & Mobile Menu */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-            {/* Consultation Action - Rich Copper Gradient CTA - Visible Across All Viewports */}
+          {/* Desktop & Tablet Consultation Action - Rich Copper Gradient CTA */}
+          <div className="hidden sm:flex items-center shrink-0">
             <Link
               href="/contact"
               prefetch={true}
-              className="inline-flex items-center gap-1 sm:gap-1.5 bg-gradient-to-r from-brand-copper via-[#E27632] to-brand-copper-hover text-white px-2.5 sm:px-3.5 xl:px-4 2xl:px-5 py-1.5 sm:py-2 xl:py-2.5 rounded-full text-[11px] sm:text-xs xl:text-sm font-bold tracking-wide transition-all duration-200 shadow-[0_4px_16px_rgba(217,107,39,0.32)] hover:shadow-[0_8px_24px_rgba(217,107,39,0.46)] hover:-translate-y-0.5 active:translate-y-0 active:scale-95 border border-amber-600/30 whitespace-nowrap shrink-0 group"
+              className="inline-flex items-center gap-1.5 xl:gap-2 bg-gradient-to-r from-brand-copper via-[#E27632] to-brand-copper-hover text-white px-3.5 xl:px-5 py-2 xl:py-2.5 rounded-full text-xs xl:text-sm font-bold tracking-wide transition-all duration-200 shadow-[0_4px_16px_rgba(217,107,39,0.32)] hover:shadow-[0_8px_24px_rgba(217,107,39,0.46)] hover:-translate-y-0.5 active:translate-y-0 active:scale-95 border border-amber-600/30 whitespace-nowrap shrink-0 group"
               title="Schedule a Consultation with Homace Specialists"
             >
               <Calendar className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-white shrink-0 group-hover:rotate-6 transition-transform" />
-              <span className="whitespace-nowrap">
-                <span className="hidden min-[380px]:inline">Consultation</span>
-                <span className="min-[380px]:hidden">Consult</span>
-              </span>
+              <span className="whitespace-nowrap">Consultation</span>
             </Link>
+          </div>
 
-            {/* Mobile Menu Hamburger Button */}
-            <div className="flex lg:hidden shrink-0">
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-1.5 sm:p-2.5 rounded-2xl bg-brand-slate-100 hover:bg-brand-slate-200 text-brand-navy border border-brand-slate-200/80 active:scale-95 transition-all shadow-2xs"
-                aria-label="Toggle navigation menu"
-              >
-                {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
-              </button>
-            </div>
+          {/* Mobile Menu Hamburger Button */}
+          <div className="flex lg:hidden shrink-0">
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2.5 rounded-2xl bg-brand-slate-100 hover:bg-brand-slate-200 text-brand-navy border border-brand-slate-200/80 active:scale-95 transition-all shadow-2xs"
+              aria-label="Toggle navigation menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
         </div>
       </div>
@@ -382,6 +385,22 @@ export default function Navbar() {
       {/* Responsive Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-brand-slate-200 bg-white/98 backdrop-blur-xl px-4 pt-3 pb-6 space-y-4">
+          {/* Quick Consultation CTA Banner in Mobile Drawer */}
+          <div className="p-3 rounded-2xl bg-gradient-to-r from-brand-copper/10 via-brand-azure-tint/60 to-brand-copper/10 border border-brand-copper/30 flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <div className="text-xs font-bold text-brand-navy">Property Advisory Desk</div>
+              <div className="text-[11px] text-brand-slate-500">Bahria Town & DHA Islamabad</div>
+            </div>
+            <Link
+              href="/contact"
+              prefetch={true}
+              onClick={() => setMobileMenuOpen(false)}
+              className="shrink-0 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-brand-copper to-brand-copper-hover text-white text-xs font-bold shadow-xs active:scale-95 transition-all whitespace-nowrap"
+            >
+              Book Now
+            </Link>
+          </div>
+
           <div className="flex flex-col space-y-1 text-sm font-medium text-brand-slate-800">
             <div className="text-[11px] font-bold uppercase tracking-wider text-brand-copper px-3 py-1">
               Properties & Explore
